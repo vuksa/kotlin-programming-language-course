@@ -18,6 +18,10 @@ class PalindromeNumberTest : TestCase() {
         "0, true"
     )
     fun `test - is Number a Palindrome`(input: Int, expected: Boolean) {
-        assertEquals(expected, isPalindrome(input))
+        val actual = isPalindrome(input)
+        assertEquals(expected, actual,
+            "Number $input is expected ${if (expected) "to be a palindrome" else "not to be palindrome"}, " +
+                    "but it ${if (actual) "was" else "wasn't"}."
+        )
     }
 }
