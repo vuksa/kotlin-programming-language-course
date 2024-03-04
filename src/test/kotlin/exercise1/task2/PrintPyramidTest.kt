@@ -21,7 +21,11 @@ class PrintPyramidTest : TestCase() {
         val pyramidStructure = captureSystemOut { printPyramid(level) }
 
         val expectedPyramid = levelToPyramidStructureCatalog.getValue(level)
-        assertEquals(expectedPyramid.trim(), pyramidStructure.trim())
+        assertEquals(
+            expectedPyramid.trim(),
+            pyramidStructure.trim(),
+            "Expected pyramid structure for level $level was $pyramidStructure, but expected was:\n$expectedPyramid"
+        )
     }
 
     @Test
