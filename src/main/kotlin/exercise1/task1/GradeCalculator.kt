@@ -39,7 +39,7 @@ import java.util.Scanner
  * ```
  */
 
-internal fun calculateGrade(score: Int) {
+internal fun calculateGrade(score: Int): Int {
     TODO("Implement me!!!")
 }
 
