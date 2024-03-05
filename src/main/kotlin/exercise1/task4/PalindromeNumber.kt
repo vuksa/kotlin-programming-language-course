@@ -28,8 +28,16 @@ package org.jetbrains.exercise1.task4
  */
 
 internal fun isPalindrome(x: Int): Boolean {
-    TODO("Implement me!!!")
+    val numAsString = x.toString()
+    for (index in 0..numAsString.lastIndex / 2) {
+        if (numAsString[index] != numAsString[numAsString.lastIndex - index]) {
+            return false
+        }
+    }
+    return true
 }
+
+private fun isPalindromeSolutionTwo(x: Int): Boolean = x.toString() == x.toString().reversed()
 
 fun main() {
     val number = 121
