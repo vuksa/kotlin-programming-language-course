@@ -1,9 +1,8 @@
 package common
 
-import java.io.File
 import java.nio.file.Path
-import java.nio.file.Paths
 import kotlin.io.path.exists
+import kotlin.io.path.toPath
 
 abstract class TestCase {
 
@@ -26,6 +25,6 @@ abstract class TestCase {
      * @return The path of the test data directory.
      */
     private fun getTestDataDir(): Path {
-        return Paths.get(File(".").canonicalPath).resolve("src/test/testData")
+        return requireNotNull(this.javaClass.getResource("/testdata")).toURI().toPath()
     }
 }
