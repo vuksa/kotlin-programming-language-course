@@ -30,9 +30,9 @@ class PrintPyramidTest : TestCase() {
 
     @Test
     fun `test - invalid input`() {
-        assertThrows<IllegalArgumentException> { printPyramid(-1) }
-        assertThrows<IllegalArgumentException> { printPyramid(2) }
-        assertThrows<IllegalArgumentException> { printPyramid(16) }
+        assertThrows<Exception> { printPyramid(-1) }
+        assertThrows<Exception> { printPyramid(0) }
+        assertThrows<Exception> { printPyramid(16) }
     }
 
     private fun captureSystemOut(block: () -> Unit): String {

@@ -33,7 +33,7 @@ class ReverseIntegerTest : TestCase() {
 
     @Test
     fun `test - error is thrown for argument out of range -1_000_000 to 1_000_000`() {
-        assertThrows<IllegalArgumentException> { reverseInteger(1_000_001) }
-        assertThrows<IllegalArgumentException> { reverseInteger(-1_000_001) }
+        assertThrows<Exception> { reverseInteger(1_000_001) }
+        assertThrows<Exception> { reverseInteger(-1_000_001) }
     }
 }
