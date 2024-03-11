@@ -9,7 +9,7 @@ import kotlin.math.abs
  * The function is written with the imperative approach, and the task of this assignment is to refactor it to the
  * functional approach.
  *
- * Constrains:
+ * Constraints:
  * List has at least two integers.
  *
  * @receiver The input list of integers from which to find the pair with the biggest difference.

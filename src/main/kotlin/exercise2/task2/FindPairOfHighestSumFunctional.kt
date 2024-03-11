@@ -13,7 +13,7 @@ import org.jetbrains.exercise2.task3.findPairWithBiggestDifference
  *
  * Write the solution with the functional approach.
  *
- * Constrains
+ * Constraints
  * List has at least two integers.
  * Items in the list are in range -1000..1000
  *

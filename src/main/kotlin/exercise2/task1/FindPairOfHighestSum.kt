@@ -11,7 +11,7 @@ import org.jetbrains.exercise2.task3.findPairWithBiggestDifference
  * that make the highest sum. If there is more than one pair that makes the highest sum,
  * return the last pair.
  *
- * Constrains:
+ * Constraints:
  * List has at least two integers.
  * Items in the list are in range -1000..1000
  *
