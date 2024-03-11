@@ -28,9 +28,9 @@ fun main() {
     val expectedPair = Pair(995, -934)
     val actualPair = nums.findHighestSumPairFunctional()
 
-    println("Pair that has highest difference in list $nums is $actualPair.")
+    println("Pair that has highest sum in list $nums is $actualPair.")
 
     require(expectedPair.isEqualsTo(actualPair)) {
-        "Actual pair that has highest difference in list $nums was $actualPair, but expected was $expectedPair"
+        "Actual pair that has highest sum in list $nums was $actualPair, but expected was $expectedPair"
     }
 }

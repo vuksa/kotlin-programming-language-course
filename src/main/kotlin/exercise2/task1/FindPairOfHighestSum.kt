@@ -23,12 +23,12 @@ internal fun List<Int>.findHighestSumPair(): Pair<Int, Int> {
 
 fun main() {
     val nums = listOf(743, 284, 677, -753, 995, -934, 102, 903, -83, -760, 77, -420)
-    val expectedPair = Pair(995, -934)
-    val actualPair = nums.findPairWithBiggestDifference()
+    val expectedPair = Pair(995, 903)
+    val actualPair = nums.findHighestSumPair()
 
-    println("Pair that has highest difference in list $nums is $actualPair.")
+    println("Pair that has highest sum in list $nums is $actualPair.")
 
     require(expectedPair.isEqualsTo(actualPair)) {
-        "Actual pair that has highest difference in list $nums was $actualPair, but expected was $expectedPair"
+        "Actual pair that has highest sum in list $nums was $actualPair, but expected was $expectedPair"
     }
 }
