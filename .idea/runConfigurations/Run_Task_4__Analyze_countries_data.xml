@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Run Task 2: Print Pyramid Tests" type="GradleRunConfiguration" factoryName="Gradle" folderName="Exercise 1">
+  <configuration default="false" name="Run Task 4: Analyze countries data" type="GradleRunConfiguration" factoryName="Gradle" folderName="Exercise 2">
     <ExternalSystemSettings>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -12,7 +12,7 @@
         <list>
           <option value=":test" />
           <option value="--tests" />
-          <option value="&quot;exercise1.task2.PrintPyramidTest&quot;" />
+          <option value="&quot;exercise2.task4.CountriesTest&quot;" />
         </list>
       </option>
       <option name="vmOptions" />
