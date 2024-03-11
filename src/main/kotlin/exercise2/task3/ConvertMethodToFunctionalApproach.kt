@@ -13,8 +13,7 @@ import kotlin.math.abs
  * List has at least two integers.
  *
  * @receiver The input list of integers from which to find the pair with the biggest difference.
- * @return The pair with the biggest difference between its elements, or null if the input list
- * has zero or one elements.
+ * @return The pair with the biggest difference between its elements.
  */
 
 internal fun List<Int>.findPairWithBiggestDifference(): Pair<Int, Int> {
@@ -28,7 +27,7 @@ internal fun List<Int>.findPairWithBiggestDifference(): Pair<Int, Int> {
             val second = this[j]
             val absDifference = abs(first - second)
 
-            if (absDifference > biggestDifference) {
+            if (absDifference >= biggestDifference) {
                 biggestDifference = absDifference
                 resultPair = Pair(first, second)
             }
