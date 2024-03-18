@@ -25,7 +25,7 @@ internal fun List<Int>.findHighestSumPairFunctional(): Pair<Int, Int> {
 
 fun main() {
     val nums = listOf(743, 284, 677, -753, 995, -934, 102, 903, -83, -760, 77, -420)
-    val expectedPair = Pair(995, -934)
+    val expectedPair = Pair(995, 903)
     val actualPair = nums.findHighestSumPairFunctional()
 
     println("Pair that has highest sum in list $nums is $actualPair.")
