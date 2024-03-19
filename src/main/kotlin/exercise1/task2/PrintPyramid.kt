@@ -57,9 +57,18 @@ package org.jetbrains.exercise1.task2
  */
 
 internal fun printPyramid(level: Int) {
-    TODO("Implement me!!!")
+    if(level !in 1..15) throw IllegalArgumentException("Invalid level argument")
+
+
+    for(i in 0..level - 1) {
+        val spacesCount = level - i - 1
+        val starsCount = 2 * i + 1
+        print(" ".repeat(spacesCount))
+        print("*".repeat(starsCount))
+        println(" ".repeat(spacesCount))
+    }
 }
 
 fun main() {
-    printPyramid(5)
+    printPyramid(15)
 }

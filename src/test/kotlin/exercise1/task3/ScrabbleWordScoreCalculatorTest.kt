@@ -23,7 +23,7 @@ class ScrabbleWordScoreCalculatorTest : TestCase() {
         }
     }
 
-    private fun loadTestData() = getTestData("scrabble_words.csv")
+    private fun loadTestData() = getTestData("/home/mikmik/development/faks/4sem/kotlin/pv2/src/test/testdata/scrabble_words.csv")
         .readLines()
         // Drop header line
         .drop(1)

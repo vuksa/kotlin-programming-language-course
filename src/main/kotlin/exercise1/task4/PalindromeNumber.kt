@@ -27,8 +27,19 @@ package org.jetbrains.exercise1.task4
  * ```
  */
 
+fun String.at(index : Int) : Char {
+    return if(index >= 0) this.get(index) else this.get(length - 1 + index)
+}
+
 internal fun isPalindrome(x: Int): Boolean {
-    TODO("Implement me!!!")
+    if(x !in -1_000_000..1_000_000) throw IllegalArgumentException("x in the invalid range!")
+    val strX : String = x.toString()
+    strX.replace(" ", "")
+//    val len = strX.length
+//    for(i in 0..len / 2) if (strX.at(i) != strX.at(-i)) return false
+//    return true
+
+    return strX == strX.reversed()
 }
 
 fun main() {

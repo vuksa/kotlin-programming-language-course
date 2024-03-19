@@ -27,7 +27,16 @@ package org.jetbrains.exercise1.task5
  */
 
 internal fun reverseInteger(x: Int): Int {
-    TODO("Implement me!!!")
+    if(x !in -1_000_000..1_000_000) throw IllegalArgumentException("x in the invalid range!")
+    var res = 1
+    var number = x
+
+    if(x < 0) {
+        res *= -1
+        number *= -1
+    }
+    res *= number.toString().reversed().toInt()
+    return res
 }
 
 fun main() {
