@@ -18,7 +18,17 @@ import org.jetbrains.exercise2.task3.findPairWithBiggestDifference
  */
 
 internal fun List<Int>.findHighestSumPair(): Pair<Int, Int> {
-    TODO("Implement me!!")
+    var par = Pair(this.min(), this.min())
+    var sum = par.first + par.second
+    for (x in this) {
+        for (y in this) {
+            if (y != x && (x + y) > sum) {
+                par = Pair(x, y)
+                sum = par.first + par.second
+            }
+        }
+    }
+    return par
 }
 
 fun main() {
