@@ -1,5 +1,6 @@
 package exercise2.task2
 
+import exercise2.task1.findHighestSumPair
 import org.jetbrains.exercise2.common.isEqualsTo
 import org.jetbrains.exercise2.task3.findPairWithBiggestDifference
 
@@ -20,7 +21,9 @@ import org.jetbrains.exercise2.task3.findPairWithBiggestDifference
  */
 
 internal fun List<Int>.findHighestSumPairFunctional(): Pair<Int, Int> {
-    TODO("Implement me!!")
+    require(this.size >= 2) { "List must have at least two integers." }
+    require(this.all { it in -1000..1000 })
+    return this.sortedDescending().let { sortedList -> sortedList.first() to sortedList[1] }
 }
 
 fun main() {

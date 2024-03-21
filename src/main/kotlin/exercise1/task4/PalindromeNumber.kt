@@ -28,11 +28,19 @@ package org.jetbrains.exercise1.task4
  */
 
 internal fun isPalindrome(x: Int): Boolean {
-    TODO("Implement me!!!")
+    require(x in -1000000..1000000) {
+        "Number must be in range -1000000..1000000"
+    }
+    return when {
+        x < 0 -> false
+        x.toString().length == 1 -> true
+        x.toString() == x.toString().reversed() -> true
+        else -> false
+    }
 }
 
 fun main() {
-    val number = 121
+    val number = 56465
     if (isPalindrome(number)) {
         println("Number $number is a palindrome.")
     } else {
