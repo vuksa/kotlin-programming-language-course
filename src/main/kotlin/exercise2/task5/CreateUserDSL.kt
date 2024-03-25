@@ -55,7 +55,7 @@ internal fun user(initUser: User.() -> Unit): User {
 
 internal fun User.address(initAddress: Address.() -> Unit): User {
     //val adresa = Address()
-    address = Address().apply(initAddress)
+    this.address = Address().apply(initAddress)
     return this
 }
 
