@@ -29,7 +29,20 @@ package exercise3.task3
  */
 
 internal fun isSherlockValid(s: String): String {
-    TODO("Implement me!!!")
+    val freqOfFreqMap: Map<Int, Int> = s.groupingBy { it }
+        .eachCount()
+        .values
+        .groupingBy { it }
+        .eachCount()
+
+    return when(freqOfFreqMap.size) {
+        2 -> {
+            val (minFrequency, maxFrequency) = freqOfFreqMap.keys.sorted()
+            if ((freqOfFreqMap[minFrequency] == 1 && minFrequency == 1) || (freqOfFreqMap[maxFrequency] == 1 && maxFrequency - minFrequency == 1)) "YES" else "NO"
+        }
+        1 -> "YES"
+        else -> "NO"
+    }
 }
 
 fun main() {

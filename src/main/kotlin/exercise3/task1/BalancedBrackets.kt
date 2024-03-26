@@ -1,5 +1,7 @@
 package exercise3.task1
 
+import java.util.*
+
 /**
  * Task1: Balanced Brackets (Parentheses) Problem
  *
@@ -23,10 +25,21 @@ package exercise3.task1
  * - ```"[{(}]"```  is not balanced because there are unmatched opening brackets, in this case `)` is missing.
  *
  */
+val brackets: Map<Char, Char> = mapOf(']' to '[', '}' to '{', ')' to '(')
 
-
-internal fun isExpressionBalanced(expression: String): Boolean {
-    TODO("Implement me!!!")
+fun isExpressionBalanced(expression: String): Boolean {
+    val stack = LinkedList<Char>()
+    expression.forEach {
+        when (it) {
+            in brackets.values -> stack.push(it)
+            in brackets.keys -> {
+                if (stack.isEmpty() || brackets[it] != stack.pop()) {
+                    return false
+                }
+            }
+        }
+    }
+    return stack.isEmpty()
 }
 
 fun main() {
