@@ -1,5 +1,7 @@
 package org.jetbrains.exercise1.task5
 
+import kotlin.math.abs
+
 /**
  * Task 5: Given an integer x, return x with its digits reversed.
  *
@@ -27,7 +29,23 @@ package org.jetbrains.exercise1.task5
  */
 
 internal fun reverseInteger(x: Int): Int {
-    TODO("Implement me!!!")
+    require(x in -1_000_000..1_000_000)
+    var input = x
+    var reversed = 0
+
+    while (input != 0) {
+        val digit = input % 10
+        reversed = reversed * 10 + digit
+        input /= 10
+    }
+
+    return reversed
+}
+
+private fun reverseIntegerSolutionTwo(x: Int): Int {
+    require(x in -1_000_000..1_000_000)
+    val coefficient = if (x < 0) -1 else 1
+    return abs(x).toString().reversed().toInt() * coefficient
 }
 
 fun main() {

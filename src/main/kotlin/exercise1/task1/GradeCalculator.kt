@@ -1,6 +1,7 @@
 package org.jetbrains.exercise1.task1
 
-import java.util.Scanner
+import java.util.*
+import kotlin.math.max
 
 /**
  * Task 1: Grade Calculator
@@ -40,7 +41,24 @@ import java.util.Scanner
  */
 
 internal fun calculateGrade(score: Int): Int {
-    TODO("Implement me!!!")
+    return when (score) {
+        in 0..50 -> 5
+        in 51..60 -> 6
+        in 61..70 -> 7
+        in 71..80 -> 8
+        in 81..90 -> 9
+        in 91..100 -> 10
+        else -> throw IllegalArgumentException("Score is out of range 0 to 100.")
+    }
+}
+
+private fun calculateGradeSolutionTwo(score: Int): Int {
+    require(score in 0..100) {
+        "Score is out of range 0 to 100."
+    }
+
+    val result = (score - 1) / 10 + 1
+    return max(result, 5)
 }
 
 fun main() {
@@ -48,5 +66,9 @@ fun main() {
     val scanner = Scanner(System.`in`)
     val score = scanner.nextInt()
 
-    calculateGrade(score)
+    try {
+        calculateGrade(score)
+    } catch (ex: IllegalArgumentException) {
+        ex.printStackTrace()
+    }
 }
