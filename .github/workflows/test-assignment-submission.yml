@@ -14,6 +14,11 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      checks: write
+
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -32,3 +37,10 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run tests
         run: ./gradlew test
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()    # run this step even if previous step failed
+        with:
+          name: Submission Test Results            # Name of the check run which will be created
+          path: '**/build/test-results/test/TEST-*.xml'   # Path to test results
+          reporter: java-junit
