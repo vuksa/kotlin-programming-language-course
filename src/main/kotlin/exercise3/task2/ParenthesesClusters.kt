@@ -1,5 +1,8 @@
 package exercise3.task2
 
+import exercise3.task1.brackets
+import java.util.*
+
 /**
  * Task 2: Split Expression To Parentheses Clusters
  *
@@ -24,7 +27,27 @@ package exercise3.task2
  */
 
 internal fun String.splitToBracketsClusters(): List<String> {
-    TODO("Implement me!!!")
+    val stack = LinkedList<Char>()
+    val returnListOfBrackets = mutableListOf<String>()
+
+    var currBalancedBrackets = ""
+    this.forEach {
+        currBalancedBrackets += it
+        when (it) {
+            in brackets.values -> stack.push(it)
+            in brackets.keys -> {
+                if (stack.isEmpty() || brackets[it] != stack.pop()) {
+                    return listOf()
+                }
+            }
+        }
+        if (stack.isEmpty()) {
+            returnListOfBrackets.add(currBalancedBrackets)
+            currBalancedBrackets = ""
+        }
+    }
+    if (!stack.isEmpty()) return listOf()
+    return returnListOfBrackets
 }
 
 fun main() {
