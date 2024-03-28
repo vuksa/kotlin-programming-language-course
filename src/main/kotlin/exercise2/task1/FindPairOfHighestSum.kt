@@ -18,7 +18,10 @@ import org.jetbrains.exercise2.task3.findPairWithBiggestDifference
  */
 
 internal fun List<Int>.findHighestSumPair(): Pair<Int, Int> {
-    TODO("Implement me!!")
+    val prvi = this.sorted().get(this.lastIndex)
+    val drugi = this.sorted().get(this.lastIndex-1)
+
+    return Pair(prvi, drugi)
 }
 
 fun main() {
