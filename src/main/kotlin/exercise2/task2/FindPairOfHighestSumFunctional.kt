@@ -20,7 +20,10 @@ import org.jetbrains.exercise2.task3.findPairWithBiggestDifference
  */
 
 internal fun List<Int>.findHighestSumPairFunctional(): Pair<Int, Int> {
-    TODO("Implement me!!")
+//    var par = Pair<Int, Int>(0, 0)
+//    par = this.sortedDescending().let { it[0] to it[1] }
+//    return par
+    return this.sortedDescending().let { it[0] to it[1] }
 }
 
 fun main() {

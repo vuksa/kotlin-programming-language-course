@@ -17,24 +17,25 @@ import kotlin.math.abs
  */
 
 internal fun List<Int>.findPairWithBiggestDifference(): Pair<Int, Int> {
-    // TODO refactor me to functional approach and make tests pass!!!
-    var resultPair: Pair<Int, Int>? = null
-    var biggestDifference = Int.MIN_VALUE
 
-    for (i in this.indices) {
-        for (j in (i + 1) until this.size) {
-            val first = this[i]
-            val second = this[j]
-            val absDifference = abs(first - second)
+//    var resultPair: Pair<Int, Int>? = null
+//    var biggestDifference = Int.MIN_VALUE
+//
+//    for (i in this.indices) {
+//        for (j in (i + 1) until this.size) {
+//            val first = this[i]
+//            val second = this[j]
+//            val absDifference = abs(first - second)
+//
+//            if (absDifference >= biggestDifference) {
+//                biggestDifference = absDifference
+//                resultPair = Pair(first, second)
+//            }
+//        }
+//    }
+//    return resultPair!!
 
-            if (absDifference >= biggestDifference) {
-                biggestDifference = absDifference
-                resultPair = Pair(first, second)
-            }
-        }
-    }
-
-    return resultPair!!
+    return this.sorted().let { it.first() to it[lastIndex] }
 }
 
 fun main() {
