@@ -57,7 +57,14 @@ package org.jetbrains.exercise1.task2
  */
 
 internal fun printPyramid(level: Int) {
-    TODO("Implement me!!!")
+    require (level in 3..15) {
+        "Level is out of range"
+    }
+    for(i in 1..level) {
+        val spaces = " ".repeat(level - i)
+        val stars = "*".repeat(2 * i - 1)
+        println("$spaces$stars$spaces")
+    }
 }
 
 fun main() {

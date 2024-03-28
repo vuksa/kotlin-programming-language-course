@@ -40,13 +40,25 @@ import java.util.Scanner
  */
 
 internal fun calculateGrade(score: Int): Int {
-    TODO("Implement me!!!")
+//    require(score in 0..100) {
+//        "Score is out of range 0-100!"
+//    }
+    return when {
+        score in 0..50 -> 5
+        score in 51..60 -> 6
+        score in 61..70 -> 7
+        score in 71..80 -> 8
+        score in 81..90 -> 9
+        score in 91..100 -> 10
+        else -> throw IllegalArgumentException("Score out of range 0-100")
+    }
 }
 
 fun main() {
     print("Enter student score: ")
     val scanner = Scanner(System.`in`)
     val score = scanner.nextInt()
-
-    calculateGrade(score)
+    val grade = calculateGrade(score)
+    val msg = if(grade != 5) "Student's grade is: $grade" else "Student didn't pass the exam"
+    println(msg)
 }
