@@ -19,59 +19,20 @@ import org.jetbrains.exercise2.task3.findPairWithBiggestDifference
 
 internal fun List<Int>.findHighestSumPair(): Pair<Int, Int> {
 
-
-//    for ( i in 0  ..this.size - 1){
-//        if(this[i] >= first){
-//            first = this[i]
-//        }
-//    }
-//
-//    for ( i in 0  .. this.size - 1){
-//        if(this[i] > second && this[i] < first){
-//            second = this[i]
-//        }
-//    }
-
-//    var first = this[0]
-//    var second = this[0]
-//    println("Velicina " + this.size)
-//    for (i in 0 ..< this.size -1){
-//        if (this[i+1] >= first ) first = this[i+1]
-//        if ((this[i] > second) && (this[i] < first)) second = this[i]
-//    }
-//    if ((this[lastIndex] > second) && (this[lastIndex] < first)) second = this[lastIndex]
-//    println("Prvi: " + first)
-//    println("Drugi: " + second)
-
-
-//    Prlazak kroz dve petlje
-//    var first = this[1]
-//    var second = this[0]
-//    for ( i in indices){
-//        if(this[i] >= first){
-//            first = this[i]
-//        }
-//    }
-//
-//    for ( i in indices){
-//        if((this[i] > second) && (this[i] < first)){
-//            second = this[i]
-//        }
-//    }
-
-//    Prolazak kroz jednu petlju
     var first = this[0]
-    var second = this[0]
+    var second = Integer.MIN_VALUE
+    var nextNum = 0
     for (i in 0 ..< this.size -1){
-        if (this[i+1] >= first ){
+        nextNum = i+1
+        if (this[nextNum] >= first ){
             second = first
-            first = this[i+1]
+            first = this[nextNum]
         }
-        else if ((second < this[i+1]) && second < first){
-            second = this[i+1]
+        else if ((second < this[nextNum]) && second < first){
+            second = this[nextNum]
         }
     }
-    return Pair<Int, Int>(first, second)
+    return first to second
 }
 
 fun main() {

@@ -75,20 +75,10 @@ internal fun List<Country>.findCountryWithLowestPopulationDensity(): Country {
 }
 
 internal fun List<Country>.findLanguageSpokenInMostCountries(): String {
-    val jezik = this.flatMap { it.languages }.groupingBy { it }.eachCount().maxBy { it.value}.key
-//    println("Ovo je nesto: " + jezik)
-    return jezik
+    return this.flatMap { it.languages }.groupingBy { it }.eachCount().maxBy { it.value}.key
 }
 
 internal fun List<Country>.filterCountriesThatSpeakLanguage(language: String): List<Country> {
-
-//    var lista = listOf<Country>(this.first())
-//    println("eo")
-//    this.flatMap { it.languages }.find { it.equals(language) }?.forEach { println(it) }
-//    var a = this.map { it.name to it.languages }.filter { it.second.contains(language) }
-//    lista = this.filter { it.languages.contains(language) }
-//    var a = this.flatMap { it.languages }.contains(language)
-
     return this.filter { it.languages.contains(language) }
 }
 
