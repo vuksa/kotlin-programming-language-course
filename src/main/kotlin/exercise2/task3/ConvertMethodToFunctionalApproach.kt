@@ -1,7 +1,6 @@
 package org.jetbrains.exercise2.task3
 
 import org.jetbrains.exercise2.common.isEqualsTo
-import kotlin.math.abs
 
 /**
  * Task 3: Function [findPairWithBiggestDifference] finds the pair with the biggest difference in a list of integers.
@@ -17,24 +16,11 @@ import kotlin.math.abs
  */
 
 internal fun List<Int>.findPairWithBiggestDifference(): Pair<Int, Int> {
-    // TODO refactor me to functional approach and make tests pass!!!
-    var resultPair: Pair<Int, Int>? = null
-    var biggestDifference = Int.MIN_VALUE
-
-    for (i in this.indices) {
-        for (j in (i + 1) until this.size) {
-            val first = this[i]
-            val second = this[j]
-            val absDifference = abs(first - second)
-
-            if (absDifference >= biggestDifference) {
-                biggestDifference = absDifference
-                resultPair = Pair(first, second)
-            }
-        }
+    require(this.size >= 2) {
+        "The list must have at least two integers."
     }
 
-    return resultPair!!
+    return this.sortedDescending().let { it.first() to it.last() }
 }
 
 fun main() {

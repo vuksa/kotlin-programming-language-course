@@ -28,7 +28,10 @@ package org.jetbrains.exercise1.task4
  */
 
 internal fun isPalindrome(x: Int): Boolean {
-    TODO("Implement me!!!")
+    require(x in -1_000_000..1_000_000) {
+        "The input value is out of range. Please input the value between -1_000_000 and 1_000_000."
+    }
+    return x.toString() == x.toString().reversed()
 }
 
 fun main() {

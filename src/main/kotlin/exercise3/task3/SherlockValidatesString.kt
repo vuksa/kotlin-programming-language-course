@@ -1,5 +1,7 @@
 package exercise3.task3
 
+import kotlin.math.pow
+
 /**
  * Task 3: Sherlock Validates the Words
  *
@@ -29,7 +31,28 @@ package exercise3.task3
  */
 
 internal fun isSherlockValid(s: String): String {
-    TODO("Implement me!!!")
+    require(s.length in (1..(10.0).pow(5).toInt())) {
+        "The length of the string must be in the given range: 1 to 10⁵."
+    }
+    require(s.all { it.isLowerCase() }) {
+        "Uppercase and special characters are not allowed. Please make sure that the string contains only lowercase " +
+        "characters."
+    }
+
+    val frequencyMap = s.groupingBy { it }.eachCount()
+    val occurrences = frequencyMap.values.groupingBy { it }.eachCount()
+
+    if (occurrences.size == 1)
+        return "YES"
+    if (occurrences.size == 2) {
+        val (freq1, freq2) = occurrences.keys.toList()
+        val (count1, count2) = occurrences.values.toList()
+
+        if ((count1 == 1 && (freq1 == 1 || freq1 - freq2 == 1)) ||
+            (count2 == 1 && (freq2 == 1 || freq2 - freq1 == 1)))
+            return "YES"
+    }
+    return "NO"
 }
 
 fun main() {
