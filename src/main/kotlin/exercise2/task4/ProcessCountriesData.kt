@@ -80,8 +80,8 @@ internal fun List<Country>.findLanguageSpokenInMostCountries(): String {
         .eachCount()
         .toList()
         .sortedByDescending { it.second }
-        .map{ it -> it.first }
         .first()
+        .first
 }
 
 internal fun List<Country>.filterCountriesThatSpeakLanguage(language: String): List<Country> {
@@ -97,5 +97,4 @@ fun main() {
     println("Language spoken in most countries is a ${countries.findLanguageSpokenInMostCountries()}")
     val countriesThatSpeakEnglish = countries.filterCountriesThatSpeakLanguage("English")
     println("Countries that speak English language are ${countriesThatSpeakEnglish.joinToString { it.name }}")
-    //println(countries.flatMap { it.languages }.groupingBy { it }.eachCount().toList().sortedByDescending { it.second }.map{ it -> it.first }.first())
 }

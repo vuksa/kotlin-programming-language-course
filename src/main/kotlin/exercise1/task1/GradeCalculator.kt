@@ -40,9 +40,6 @@ import java.util.Scanner
  */
 
 internal fun calculateGrade(score: Int): Int {
-//    require(score in 0..100) {
-//        "Score is out of range 0-100!"
-//    }
     return when {
         score in 0..50 -> 5
         score in 51..60 -> 6

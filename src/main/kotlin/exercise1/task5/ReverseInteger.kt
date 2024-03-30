@@ -30,7 +30,8 @@ import kotlin.math.abs
 
 internal fun reverseInteger(x: Int): Int {
     require(x in -1000000..1000000) { "Number must be integer in range -1000000..1000000" }
-    return if (x < 0) ("-" + abs(x).toString().reversed()).toInt() else x.toString().reversed().toInt()
+    val reversed = abs(x).toString().reversed()
+    return if (x < 0) ("-$reversed").toInt() else reversed.toInt()
 }
 fun main() {
     val integer = -78952
