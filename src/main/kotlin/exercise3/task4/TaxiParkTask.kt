@@ -10,7 +10,9 @@ package exercise3.task4
  * Find all the drivers who performed no trips.
  */
 internal fun TaxiPark.findFakeDrivers(): Set<Driver> {
-    TODO("Implement me!!!")
+    val realDriversNames = this.trips.map { it -> it.driver}.toSet()
+    val allDriversNames = this.allDrivers
+    return allDriversNames.subtract(realDriversNames)
 }
 
 /**
@@ -18,7 +20,14 @@ internal fun TaxiPark.findFakeDrivers(): Set<Driver> {
  * Find all the clients who completed at least the given number of trips.
  */
 internal fun TaxiPark.findFaithfulPassengers(minTrips: Int): Set<Passenger> {
-    TODO("Implement me!!!")
+    //test ovde ne prolazi, nisam siguran zasto
+    return this.trips
+        .flatMap { it.passengers }
+        .groupingBy { it }
+        .eachCount()
+        .filter{ it.value >= minTrips }
+        .map { it.key }
+        .toSet()
 }
 
 /**
@@ -26,7 +35,22 @@ internal fun TaxiPark.findFaithfulPassengers(minTrips: Int): Set<Passenger> {
  * Find all the passengers, who were taken by a given driver more than once.
  */
 internal fun TaxiPark.findFrequentPassengers(driver: Driver): Set<Passenger> {
-    TODO("Implement me!!!")
+    val allPassengers = mutableListOf<Passenger>()
+    this.trips
+        .filter { it.driver == driver }
+        .map { it.passengers }
+        .forEach {
+            it.forEach {
+                allPassengers.add(it)
+            }
+        }
+
+    return allPassengers.groupingBy { it }
+        .eachCount()
+        .filter { it.value > 1 }
+        .map { it.key }
+        .toSet()
+
 }
 
 /**
@@ -34,5 +58,17 @@ internal fun TaxiPark.findFrequentPassengers(driver: Driver): Set<Passenger> {
  * Find the passengers who had a discount for the majority of their trips.
  */
 internal fun TaxiPark.findSmartPassengers(): Set<Passenger> {
-    TODO("Implement me!!!")
+    val passengersMap = trips
+        .flatMap { t -> t.passengers.map { p -> p to (t.discount != null) } }
+        .groupBy({ it.first }, { it.second })
+
+    return passengersMap.filterValues { discounts ->
+            val withDiscount = discounts.count { it }
+            val noDiscount = discounts.size - withDiscount
+            withDiscount > noDiscount
+        }
+        .map { it.key }
+        .toSet()
 }
+
+
