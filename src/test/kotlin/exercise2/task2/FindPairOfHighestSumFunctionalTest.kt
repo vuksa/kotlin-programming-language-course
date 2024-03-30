@@ -21,7 +21,8 @@ class HighestSumPairFunctionalTest {
             TestEntry(listOf(34, 376, 577, -900, -61, 362, 82, -973), Pair(376, 577)),
             TestEntry(listOf(227, 891, -41, 666, 906, 201, -121, -100, 268, -215, -746, -712), Pair(906, 891)),
             TestEntry(listOf(-46, 943, 572, 15, 996, 632, 997), Pair(996, 997)),
-            TestEntry(listOf(-453, -214, -593, 315, 497, -90, -631, 706, -950, -666, -1000, -379), Pair(706, 497))
+            TestEntry(listOf(-453, -214, -593, 315, 497, -90, -631, 706, -950, -666, -1000, -379), Pair(706, 497)),
+            TestEntry(listOf(3, 1, 2), Pair(3, 2))
         )
 
         testData.forEach { (input: List<Int>, expected: Pair<Int, Int>) ->
