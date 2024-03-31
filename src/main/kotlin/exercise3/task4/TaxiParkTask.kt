@@ -1,6 +1,5 @@
 package exercise3.task4
 
-import kotlin.math.min
 
 /**
  * Task 4: Taxi park
@@ -20,7 +19,6 @@ internal fun TaxiPark.findFakeDrivers(): Set<Driver> {
  * Find all the clients who completed at least the given number of trips.
  */
 internal fun TaxiPark.findFaithfulPassengers(minTrips: Int): Set<Passenger> {
-
     return this.allPassengers.filter { passenger ->
         trips.count { it.passengers.contains(passenger) } >= minTrips }.toSet()
 }
@@ -39,7 +37,6 @@ internal fun TaxiPark.findFrequentPassengers(driver: Driver): Set<Passenger> {
  * Find the passengers who had a discount for the majority of their trips.
  */
 internal fun TaxiPark.findSmartPassengers(): Set<Passenger> {
-
     /*
     Kako bih mogao da recikliram kod "it.passengers.contains(passenger)",
     da ne brojim dva puta?

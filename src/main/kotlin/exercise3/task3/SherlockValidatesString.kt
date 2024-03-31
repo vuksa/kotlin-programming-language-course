@@ -32,48 +32,39 @@ import kotlin.math.abs
 
 internal fun isSherlockValid(s: String): String {
 
-    println("String s: " + s)
+    val grpByChars = s.groupingBy { it }.eachCount()
 
-    val proba = s.groupingBy { it }.eachCount().all { ( maxOf(it.value) - minOf(it.value) ) <=1 }
+    val valuesOfGrouping = grpByChars.values.groupingBy { it }.eachCount()
 
-    val proba4 = s.groupingBy { it }.eachCount()
+    if (valuesOfGrouping.size > 2) return "NO"
+    if (valuesOfGrouping.size == 1) return "YES"
 
-    val proba5 = proba4.values.groupingBy { it }.eachCount()
-    println("Proba 5: " + proba5)
-
-    val proba6 = proba5
-    println("Proba 6: " + proba6)
-
-    if (proba5.size > 2) return "No"
-    if (proba5.size == 1) return "YES"
-
-
-    val firstKey = proba5.keys.first()
-    val firstValue = proba5.values.first()
-    val secondKey = proba5.keys.last()
-    val secondValue = proba5.values.last()
-
+    val firstKey = valuesOfGrouping.keys.first()
+    val firstValue = valuesOfGrouping.values.first()
+    val secondKey = valuesOfGrouping.keys.last()
+    val secondValue = valuesOfGrouping.values.last()
 
     if((secondValue == 1) and (secondKey== 1)) return "YES"
-    if((firstKey == 1) and (firstKey== 1)) return "YES"
+    if((firstValue == 1) and (firstKey== 1)) return "YES"
 
+    val minusKeys = abs(firstKey - secondKey)
+    val minusValues = abs(firstValue - secondValue)
 
-    println("Abs: " + abs(firstKey - secondKey))
-    if ( (abs(firstKey - secondKey) <=1)  ){
-//        if((abs(firstValue - secondValue) <= 1 ) and (firstKey > 2 || secondKey > 2))
-//            if((firstKey > 2 || secondKey > 2))
-        if (abs(firstValue - secondValue ) <= 1){
-            return "YES"
-        }
-        println("Vratilo YES")
-        return "NO"
+/*
+    Mislim da sa ovim ne pokrivam sve krajnje slucajeve
+    i da kod nije bas efikasan. Prolazi testove.
+ */
+    if ( (minusKeys <=1) or (minusValues <= 1) ){
+
+        if( (firstKey > secondKey) and (firstValue > secondValue) ) return "NO"
+        if( (firstKey < secondKey) and (firstValue < secondValue) ) return "NO"
+        if(firstValue >=2 && secondValue >= 2)  return "NO"
+
+        return "YES"
     }
     else{
-        println("Vratilo NO")
         return "NO"
     }
-
-
 
 }
 
