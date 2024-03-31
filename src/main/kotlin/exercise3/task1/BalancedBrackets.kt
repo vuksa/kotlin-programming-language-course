@@ -26,7 +26,19 @@ package exercise3.task1
 
 
 internal fun isExpressionBalanced(expression: String): Boolean {
-    TODO("Implement me!!!")
+    val open = listOf('(', '[', '{')
+    val closed = listOf(')', ']', '}')
+    val pairs = closed.zip(open).toMap()
+    val stack = mutableListOf<Char>()
+
+    for(c in expression) {
+        if (c in open) stack.add(c)
+        else if (c in closed) {
+            if(stack.isEmpty() || stack.last() != pairs[c]) return false
+            stack.removeLast()
+        }
+    }
+    return stack.isEmpty()
 }
 
 fun main() {
@@ -37,7 +49,8 @@ fun main() {
         "()" to true,
         "[[[" to false,
         "[{}()]" to true,
-        "[{(}]" to false
+        "[{(}]" to false,
+        ")))" to false
     )
 
     expressions.forEach { (expression, expectedIsBalanced) ->

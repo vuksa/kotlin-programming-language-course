@@ -24,9 +24,29 @@ package exercise3.task2
  */
 
 internal fun String.splitToBracketsClusters(): List<String> {
-    TODO("Implement me!!!")
-}
+    val open = listOf('(', '[', '{')
+    val closed = listOf(')', ']', '}')
+    val pairs = closed.zip(open).toMap()
+    val stack: MutableList<Char> = mutableListOf()
+    val clusters: MutableList<String> = mutableListOf()
 
+    var clusterStart = 0
+    for ((index, c) in this.withIndex()) {
+        if (c in open) {
+            if(stack.isEmpty() && index != 0) {
+                clusters.add(this.substring(clusterStart, index))
+                clusterStart = index
+            }
+            stack.add(c)
+        } else if (c in closed) {
+            if (stack.isEmpty() || stack.last() != pairs.get(c)) return emptyList()
+            stack.removeLast()
+        }
+    }
+    if (stack.isNotEmpty()) return emptyList()
+    clusters.add(this.substring(clusterStart, this.length))
+    return clusters
+}
 fun main() {
     val expressionsToClustersCatalog = mapOf(
         "()()()" to listOf("()", "()", "()"),

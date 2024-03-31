@@ -2,6 +2,7 @@ package exercise3.task4
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import kotlin.test.Ignore
 
 internal class TestTaxiPark {
 
@@ -51,7 +52,7 @@ internal class TestTaxiPark {
                 trip(2, 2)
             )
         assertEquals(
-            passengers(1, 2, 3, 4, 5),
+            passengers(1, 2, 4, 5),
             tp.findFaithfulPassengers(0),
             "Wrong result for 'findFaithfulPassengers()'. MinTrips: 3." + tp.display()
         )

@@ -1,5 +1,7 @@
 package exercise3.task3
 
+import kotlin.math.abs
+
 /**
  * Task 3: Sherlock Validates the Words
  *
@@ -29,7 +31,24 @@ package exercise3.task3
  */
 
 internal fun isSherlockValid(s: String): String {
-    TODO("Implement me!!!")
+    val FALSE = "NO"
+    val TRUE = "YES"
+
+    val charCounts = s.groupingBy { it }.eachCount()
+    val values = charCounts.values.toSet()
+    if (values.size > 2) return FALSE
+    if (values.size <= 1) return TRUE
+
+    val minFreq = values.minOrNull() ?: return FALSE
+    val maxFreq = values.maxOrNull() ?: return FALSE
+
+    val minFreqCount = charCounts.values.count { it == minFreq }
+    val maxFreqCount = charCounts.values.count { it == maxFreq }
+
+    if (minFreq == 1 && minFreqCount == 1) return TRUE
+    if ((maxFreq - minFreq == 1 || maxFreq - minFreq == 0) && maxFreqCount == 1) return TRUE
+
+    return FALSE
 }
 
 fun main() {
