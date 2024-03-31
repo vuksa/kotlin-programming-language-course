@@ -2,7 +2,6 @@ package exercise3.task4
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import kotlin.test.Ignore
 
 internal class TestTaxiPark {
 
