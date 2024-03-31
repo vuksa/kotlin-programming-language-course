@@ -10,7 +10,7 @@ package exercise3.task4
  * Find all the drivers who performed no trips.
  */
 internal fun TaxiPark.findFakeDrivers(): Set<Driver> {
-    TODO("Implement me!!!")
+    return allDrivers - trips.map { it.driver }.toSet()
 }
 
 /**
@@ -18,7 +18,9 @@ internal fun TaxiPark.findFakeDrivers(): Set<Driver> {
  * Find all the clients who completed at least the given number of trips.
  */
 internal fun TaxiPark.findFaithfulPassengers(minTrips: Int): Set<Passenger> {
-    TODO("Implement me!!!")
+    return allPassengers.filter { passenger ->
+        trips.count { passenger in it.passengers } >= minTrips
+    }.toSet()
 }
 
 /**
@@ -26,7 +28,12 @@ internal fun TaxiPark.findFaithfulPassengers(minTrips: Int): Set<Passenger> {
  * Find all the passengers, who were taken by a given driver more than once.
  */
 internal fun TaxiPark.findFrequentPassengers(driver: Driver): Set<Passenger> {
-    TODO("Implement me!!!")
+    return trips.filter { it.driver == driver }
+        .flatMap { it.passengers }
+        .groupingBy { it }
+        .eachCount()
+        .filterValues { it > 1 }
+        .keys
 }
 
 /**
