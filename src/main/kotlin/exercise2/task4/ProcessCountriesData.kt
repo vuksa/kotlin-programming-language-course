@@ -77,7 +77,6 @@ internal fun List<Country>.findCountryWithLowestPopulationDensity(): Country {
 internal fun List<Country>.findLanguageSpokenInMostCountries(): String {
     return this.flatMap { it.languages }
         .groupingBy { it }
-//        .also { println("all groupings $it") }
         .eachCount()
         .also { println("catalog: $it") }
         .maxBy { it.value }
@@ -86,7 +85,6 @@ internal fun List<Country>.findLanguageSpokenInMostCountries(): String {
 
 internal fun List<Country>.filterCountriesThatSpeakLanguage(language: String): List<Country> {
     return this.filter { it.languages.contains(language) }
-
 }
 
 
