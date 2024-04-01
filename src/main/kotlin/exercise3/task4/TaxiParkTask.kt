@@ -10,15 +10,20 @@ package exercise3.task4
  * Find all the drivers who performed no trips.
  */
 internal fun TaxiPark.findFakeDrivers(): Set<Driver> {
-    TODO("Implement me!!!")
+    return allDrivers.minus(this.trips.map { it.driver }.toSet())
 }
 
-/**
+    /**
  * Subtask 2:
  * Find all the clients who completed at least the given number of trips.
  */
 internal fun TaxiPark.findFaithfulPassengers(minTrips: Int): Set<Passenger> {
-    TODO("Implement me!!!")
+    return this.trips
+        .flatMap { it.passengers }
+        .groupingBy { it }
+        .eachCount()
+        .filter { it.value >= minTrips }
+        .keys
 }
 
 /**
@@ -26,7 +31,13 @@ internal fun TaxiPark.findFaithfulPassengers(minTrips: Int): Set<Passenger> {
  * Find all the passengers, who were taken by a given driver more than once.
  */
 internal fun TaxiPark.findFrequentPassengers(driver: Driver): Set<Passenger> {
-    TODO("Implement me!!!")
+    return this.trips
+        .filter { it.driver == driver }
+        .flatMap { it.passengers }
+        .groupingBy { it }
+        .eachCount()
+        .filter { it.value > 1}
+        .keys
 }
 
 /**
@@ -34,5 +45,9 @@ internal fun TaxiPark.findFrequentPassengers(driver: Driver): Set<Passenger> {
  * Find the passengers who had a discount for the majority of their trips.
  */
 internal fun TaxiPark.findSmartPassengers(): Set<Passenger> {
-    TODO("Implement me!!!")
+    return allPassengers.filter { passenger ->
+        val eachPassengerTrips = trips.filter { it.passengers.contains(passenger) }
+        val discountedTripsCount = eachPassengerTrips.count { it.discount != null }
+        discountedTripsCount > eachPassengerTrips.size / 2
+    }.toSet()
 }

@@ -1,4 +1,5 @@
 package exercise3.task1
+import java.util.Stack
 
 /**
  * Task1: Balanced Brackets (Parentheses) Problem
@@ -26,8 +27,31 @@ package exercise3.task1
 
 
 internal fun isExpressionBalanced(expression: String): Boolean {
-    TODO("Implement me!!!")
+    val chars = Stack<Char>()
+    val opening = "({["
+    val closing = ")}]"
+
+    for(char in expression) {
+        when {
+           char in opening -> chars.add(char)
+           char in closing -> {
+               if(chars.isEmpty() || !valid(chars.lastElement(), char)) {
+                   return false
+               }
+               chars.removeLast()
+           }
+        }
+    }
+    return chars.isEmpty()
 }
+
+fun valid(opening: Char, closing: Char): Boolean {
+    return (opening == '(' && closing == ')') ||
+            (opening == '[' && closing == ']') ||
+            (opening == '{' && closing == '}')
+}
+
+
 
 fun main() {
     val expressions = listOf(
