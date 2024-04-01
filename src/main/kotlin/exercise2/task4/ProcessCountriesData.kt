@@ -59,27 +59,31 @@ internal val countries = listOf(
  */
 
 internal fun List<Country>.findCountryWithBiggestTotalArea(): Country {
-    TODO("Implement me!!!")
+    return countries.maxBy { it.totalAreaInSquareKilometers }
 }
 
 internal fun List<Country>.findCountryWithBiggestPopulation(): Country {
-    TODO("Implement me!!!")
+   return countries.maxBy { it.population }
 }
 
 internal fun List<Country>.findCountryWithHighestPopulationDensity(): Country {
-    TODO("Implement me!!!")
+    return countries.maxBy { it.population/it.totalAreaInSquareKilometers }
 }
 
 internal fun List<Country>.findCountryWithLowestPopulationDensity(): Country {
-    TODO("Implement me!!!")
+    return countries.minBy { it.population/it.totalAreaInSquareKilometers }
 }
 
 internal fun List<Country>.findLanguageSpokenInMostCountries(): String {
-    TODO("Implement me!!!")
+    return countries.flatMap { it.languages }
+        .groupingBy { it }
+        .eachCount()
+        .maxBy { it.value }
+        .key
 }
 
 internal fun List<Country>.filterCountriesThatSpeakLanguage(language: String): List<Country> {
-    TODO("Implement me!!!")
+    return countries.filter { country -> country.languages.contains(language) }
 }
 
 
@@ -88,7 +92,7 @@ fun main() {
     println("Country with a biggest population is a ${countries.findCountryWithBiggestPopulation().name}")
     println("Country with a biggest population density is a ${countries.findCountryWithHighestPopulationDensity().name}")
     println("Country with a lowest population density is a ${countries.findCountryWithLowestPopulationDensity().name}")
-    println("Language spoken in most countries is a ${countries.findLanguageSpokenInMostCountries()}")
+    println("Language spoken in most countries is ${countries.findLanguageSpokenInMostCountries()}")
     val countriesThatSpeakEnglish = countries.filterCountriesThatSpeakLanguage("English")
     println("Countries that speak English language are ${countriesThatSpeakEnglish.joinToString { it.name }}")
 }
