@@ -58,28 +58,25 @@ internal val countries = listOf(
  * from Kotlin standard lib.
  */
 
-internal fun List<Country>.findCountryWithBiggestTotalArea(): Country {
-    TODO("Implement me!!!")
-}
+internal fun List<Country>.findCountryWithBiggestTotalArea(): Country = this.maxBy { it.totalAreaInSquareKilometers }
 
-internal fun List<Country>.findCountryWithBiggestPopulation(): Country {
-    TODO("Implement me!!!")
-}
+internal fun List<Country>.findCountryWithBiggestPopulation(): Country = this.maxBy { it.population }
 
-internal fun List<Country>.findCountryWithHighestPopulationDensity(): Country {
-    TODO("Implement me!!!")
-}
+internal fun List<Country>.findCountryWithHighestPopulationDensity(): Country = this
+    .maxBy { it.population / it.totalAreaInSquareKilometers }
 
-internal fun List<Country>.findCountryWithLowestPopulationDensity(): Country {
-    TODO("Implement me!!!")
-}
+internal fun List<Country>.findCountryWithLowestPopulationDensity(): Country = this
+    .minBy { it.population / it.totalAreaInSquareKilometers }
 
-internal fun List<Country>.findLanguageSpokenInMostCountries(): String {
-    TODO("Implement me!!!")
-}
+internal fun List<Country>.findLanguageSpokenInMostCountries(): String = this
+    .flatMap { it.languages }
+    .distinct()
+    .map { language -> language to this.count { country -> country.languages.contains(language) } }
+    .maxBy { it.second }
+    .first
 
 internal fun List<Country>.filterCountriesThatSpeakLanguage(language: String): List<Country> {
-    TODO("Implement me!!!")
+    return this.filter { it.languages.contains(language) }
 }
 
 
