@@ -29,7 +29,36 @@ package exercise3.task3
  */
 
 internal fun isSherlockValid(s: String): String {
-    TODO("Implement me!!!")
+    val letterToOccurrencesCount = s
+        .groupingBy { it }
+        .eachCount()
+    val occurrencesToFrequenciesMap = letterToOccurrencesCount
+        .values
+        .groupingBy { it }
+        .eachCount()
+
+    return occurrencesToFrequenciesMap
+        .let { occurrences ->
+            when {
+                occurrences.count() == 1 -> "YES"
+                occurrences.count() == 2 -> {
+                    val (occurrenceOne, occurrenceTwo) = occurrencesToFrequenciesMap.keys.toList()
+                    val (occurrenceOneCount, occurrenceTwoCount) = occurrencesToFrequenciesMap.values.toList()
+
+                    val isSherlockValid = { occOne: Int, occOneCount: Int, occTwo: Int ->
+                        occOneCount == 1 && (occOne == 1 || occOne - occTwo == 1)
+                    }
+
+                    when {
+                        isSherlockValid(occurrenceOne, occurrenceOneCount, occurrenceTwo) -> "YES"
+                        isSherlockValid(occurrenceTwo, occurrenceTwoCount, occurrenceOne) -> "YES"
+                        else -> return "NO"
+                    }
+                }
+
+                else -> "NO"
+            }
+        }
 }
 
 fun main() {

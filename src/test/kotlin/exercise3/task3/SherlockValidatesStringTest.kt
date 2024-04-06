@@ -19,7 +19,7 @@ class SherlockValidatesStringTest {
         assertStringValidity("YES", "aaabbbcccdddeeefffggghhhiiijjj")
 
         assertStringValidity("YES","a")
-        assertStringValidity("NO","acc")
+        assertStringValidity("YES","accc")
         assertStringValidity("YES", "aaabbbcccdddeeefffggghhhiiijjjk")
         assertStringValidity("NO", "aaabbbcccdddeeefffggghhhiiijjjkk")
         assertStringValidity("NO", "aabbcddd")
