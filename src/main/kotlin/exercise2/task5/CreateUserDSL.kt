@@ -48,13 +48,9 @@ internal data class Address(
  * Make sure to leverage higher-order functions with receivers, and scoped functions.
  */
 
-internal fun user(initUser: User.() -> Unit): User {
-    TODO("Implement me!!!")
-}
+internal fun user(initUser: User.() -> Unit): User = User().apply(initUser)
 
-internal fun User.address(initAddress: Address.() -> Unit): User {
-    TODO("Implement me!!!")
-}
+internal fun User.address(initAddress: Address.() -> Unit): User = apply { address = Address().apply(initAddress) }
 
 fun main() {
     val expectedUser = User(
