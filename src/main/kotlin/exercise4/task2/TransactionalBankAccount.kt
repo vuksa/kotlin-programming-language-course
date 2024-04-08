@@ -150,17 +150,17 @@ class TransactionalBankAccount(
 
     fun getAllFailedWithdrawals() : List<Transaction> {
         return transactions.filter { it.transactionStatus == Transaction.Status.FAILURE && it.transactionType == Transaction.Type.WITHDRAWAL }.
-        sortedByDescending { it.transactionDate }
+                            sortedByDescending { it.transactionDate }
     }
 
     fun getAllSuccessfulDeposits() : List<Transaction> {
         return transactions.filter { it.transactionStatus == Transaction.Status.SUCCESS && it.transactionType == Transaction.Type.DEPOSIT }.
-        sortedByDescending { it.transactionDate }
+                            sortedByDescending { it.transactionDate }
     }
 
     fun getAllSuccessfulWithdrawals() : List<Transaction> {
         return transactions.filter { it.transactionStatus == Transaction.Status.SUCCESS && it.transactionType == Transaction.Type.WITHDRAWAL }.
-        sortedByDescending { it.transactionDate }
+                            sortedByDescending { it.transactionDate }
     }
 
     override fun displayAccountInfo() {
