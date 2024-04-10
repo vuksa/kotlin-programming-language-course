@@ -1,4 +1,4 @@
-package org.jetbrains.exercise2.task4
+package exercise2.task4
 
 /**
  * Represents a country with its name, capital city, population, languages spoken, and total area in square kilometers.
@@ -16,7 +16,6 @@ internal data class Country(
     val languages: List<String>,
     val totalAreaInSquareKilometers: Double
 )
-
 
 /**
  * List of 20 countries with the data about their capitol city, official language, population, and total area.
@@ -36,8 +35,7 @@ internal val countries = listOf(
     Country("Brazil", "Brasília", 216_422_446, listOf("Portuguese"), 8_510_346.0),
     Country("Australia", "Canberra", 26_439_111, listOf("English"), 7_741_220.0),
     Country("Russia", "Moscow", 144_444_359, listOf("Russian"), 17_098_246.0),
-    Country(
-        "South Africa", "Pretoria, Bloemfontein, Cape Town", 59308690,
+    Country("South Africa", "Pretoria, Bloemfontein, Cape Town", 59308690,
         listOf(
             "Afrikaans", "English", "Zulu", "Xhosa", "Southern Sotho",
             "Tswana", "Northern Sotho", "Venda", "Tsonga", "Swati", "Ndebele"
@@ -59,27 +57,32 @@ internal val countries = listOf(
  */
 
 internal fun List<Country>.findCountryWithBiggestTotalArea(): Country {
-    TODO("Implement me!!!")
+    return this.maxBy { country -> country.totalAreaInSquareKilometers }
 }
 
 internal fun List<Country>.findCountryWithBiggestPopulation(): Country {
-    TODO("Implement me!!!")
+    return this.maxBy { country -> country.population }
 }
 
 internal fun List<Country>.findCountryWithHighestPopulationDensity(): Country {
-    TODO("Implement me!!!")
+    return this.maxBy { country -> country.population / country.totalAreaInSquareKilometers }
 }
 
 internal fun List<Country>.findCountryWithLowestPopulationDensity(): Country {
-    TODO("Implement me!!!")
+    return this.minBy { country -> country.population / country.totalAreaInSquareKilometers }
 }
 
 internal fun List<Country>.findLanguageSpokenInMostCountries(): String {
-    TODO("Implement me!!!")
+    return this.flatMap { country -> country.languages }
+        .groupingBy { it }
+        .eachCount()
+        .toList()
+        .maxBy { lang -> lang.second }
+        .first
 }
 
 internal fun List<Country>.filterCountriesThatSpeakLanguage(language: String): List<Country> {
-    TODO("Implement me!!!")
+    return this.filter { country -> country.languages.contains(language) }
 }
 
 

@@ -1,7 +1,6 @@
 package exercise2.task1
 
 import org.jetbrains.exercise2.common.isEqualsTo
-import org.jetbrains.exercise2.task3.findPairWithBiggestDifference
 
 
 /**
@@ -18,7 +17,20 @@ import org.jetbrains.exercise2.task3.findPairWithBiggestDifference
  */
 
 internal fun List<Int>.findHighestSumPair(): Pair<Int, Int> {
-    TODO("Implement me!!")
+    require(size >= 2) { "List must contain at least two elements" }
+
+    var pair = Pair(Integer.MIN_VALUE, Integer.MIN_VALUE)
+    val sum = pair.first + pair.second
+
+    for (x in 0..(size - 2)) {
+        for (y in (x+1) until size) {
+            val currentSum = pair.first + pair.second
+            if (currentSum >= sum) {
+                pair = Pair(this[x], this[y])
+            }
+        }
+    }
+    return pair
 }
 
 fun main() {

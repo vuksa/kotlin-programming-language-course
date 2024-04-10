@@ -1,4 +1,4 @@
-package org.jetbrains.exercise2.task5
+package exercise2.task5
 
 internal data class User(
     var firstName: String = "",
@@ -49,11 +49,15 @@ internal data class Address(
  */
 
 internal fun user(initUser: User.() -> Unit): User {
-    TODO("Implement me!!!")
+    return User().apply(initUser)
 }
 
 internal fun User.address(initAddress: Address.() -> Unit): User {
-    TODO("Implement me!!!")
+//    val a = Address()
+//    a.initAddress()
+//    this.address = a
+//    return this
+    return apply { address.apply { Address().apply(initAddress) } }
 }
 
 fun main() {

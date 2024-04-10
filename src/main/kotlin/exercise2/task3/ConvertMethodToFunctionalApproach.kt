@@ -1,4 +1,4 @@
-package org.jetbrains.exercise2.task3
+package exercise2.task3
 
 import org.jetbrains.exercise2.common.isEqualsTo
 import kotlin.math.abs
@@ -17,7 +17,6 @@ import kotlin.math.abs
  */
 
 internal fun List<Int>.findPairWithBiggestDifference(): Pair<Int, Int> {
-    // TODO refactor me to functional approach and make tests pass!!!
     var resultPair: Pair<Int, Int>? = null
     var biggestDifference = Int.MIN_VALUE
 
@@ -37,14 +36,26 @@ internal fun List<Int>.findPairWithBiggestDifference(): Pair<Int, Int> {
     return resultPair!!
 }
 
+// O(n log n)
+internal fun List<Int>.findPairWithBiggestDifferenceRefactored() : Pair<Int, Int> {
+    return this.sorted().let { sortedList -> sortedList.last() to sortedList.first() }
+}
+
+// O(n)
+internal fun List<Int>.findPairWithBiggestDifferenceOptimal(): Pair<Int, Int> {
+    require(size >= 2) { "List must contain at least two elements" }
+
+    val (min, max) = this.minOrNull()!! to this.maxOrNull()!!
+    return if (max - min >= 0) Pair(max, min) else Pair(min, max)
+}
+
 fun main() {
     val nums = listOf(743, 284, 677, -753, 995, -934, 102, 903, -83, -760, 77, -420)
     val expectedPair = Pair(995, -934)
-    val actualPair = nums.findPairWithBiggestDifference()
+    val actualPair = nums.findPairWithBiggestDifferenceRefactored()
 
     println("Pair that has highest difference in list $nums is $actualPair")
 
-    requireNotNull(actualPair)
     require(expectedPair.isEqualsTo(actualPair)) {
         "Actual pair that has highest difference in list $nums was $actualPair, but expected was $expectedPair."
     }

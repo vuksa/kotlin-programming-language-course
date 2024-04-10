@@ -1,6 +1,5 @@
 package exercise2.task3
 
-import org.jetbrains.exercise2.task3.findPairWithBiggestDifference
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import kotlin.math.max

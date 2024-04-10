@@ -40,13 +40,27 @@ import java.util.Scanner
  */
 
 internal fun calculateGrade(score: Int): Int {
-    TODO("Implement me!!!")
+    val result = when (score) {
+        in 51..60 -> 6
+        in 61..70 -> 7
+        in 71..80 -> 8
+        in 81..90 -> 9
+        in 91..100 -> 10
+        else -> throw IllegalArgumentException()
+    }
+
+    return result
 }
 
 fun main() {
-    print("Enter student score: ")
-    val scanner = Scanner(System.`in`)
-    val score = scanner.nextInt()
+    var score: Int
+    do {
+        print("Enter student score: ")
+        val scanner = Scanner(System.`in`)
+        score = scanner.nextInt()
+    } while (score < 0 || score > 100)
+
+    println()
 
     calculateGrade(score)
 }

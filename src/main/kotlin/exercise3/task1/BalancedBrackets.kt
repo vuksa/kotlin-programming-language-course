@@ -1,5 +1,7 @@
 package exercise3.task1
 
+import java.util.Stack
+
 /**
  * Task1: Balanced Brackets (Parentheses) Problem
  *
@@ -14,7 +16,7 @@ package exercise3.task1
  * 2. The brackets are properly nested, meaning a closing bracket cannot occur before its corresponding opening bracket.
  *
  * For example,
- * - ```"{[()]}"``` is balanced because each opening bracket has a corresponding closing bracket and they are properly nested.
+ * - ```"{[()]}"``` is balanced because each opening bracket has a corresponding closing bracket, and they are properly nested.
  * - ```"{[(])}"``` is not balanced because the closing bracket ']' appears before the `)` closing bracket.
  * - ```"{{}}"``` is balanced because all opening brackets have corresponding closing brackets, and they are properly nested.
  * - ```"()"``` is balanced because all opening brackets have corresponding closing brackets, and they are properly nested.
@@ -24,9 +26,22 @@ package exercise3.task1
  *
  */
 
+val leftBrackets = listOf('{', '(', '[')
+val rightBrackets = listOf('}', ')', ']')
+
+internal fun bracketsMatching(left : Char, right : Char): Boolean {
+    return leftBrackets.indexOf(left) == rightBrackets.indexOf(right)
+}
 
 internal fun isExpressionBalanced(expression: String): Boolean {
-    TODO("Implement me!!!")
+    val stack = Stack<Char>()
+    expression.forEach {
+        when (it) {
+            in leftBrackets -> stack.push(it)
+            in rightBrackets -> if (stack.isEmpty() || !bracketsMatching(stack.pop(), it)) return false
+        }
+    }
+    return stack.empty()
 }
 
 fun main() {

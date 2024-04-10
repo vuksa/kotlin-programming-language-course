@@ -1,6 +1,5 @@
 package exercise2.task4
 
-import org.jetbrains.exercise2.task4.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

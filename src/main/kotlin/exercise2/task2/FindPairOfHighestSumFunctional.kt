@@ -1,8 +1,7 @@
 package exercise2.task2
 
+import kotlin.system.measureTimeMillis
 import org.jetbrains.exercise2.common.isEqualsTo
-import org.jetbrains.exercise2.task3.findPairWithBiggestDifference
-
 
 /**
  * Task 2: Find a Pair that adds to the Highest Sum using Functional approach
@@ -19,18 +18,42 @@ import org.jetbrains.exercise2.task3.findPairWithBiggestDifference
  *
  */
 
+// O(n log n)
+internal fun List<Int>.findHighestSumPairFunctional1(): Pair<Int, Int> {
+    return this.sortedDescending().let { sortedList -> sortedList.first() to sortedList[1] }
+}
+
+// O(n)
 internal fun List<Int>.findHighestSumPairFunctional(): Pair<Int, Int> {
-    TODO("Implement me!!")
+    val (max1, max2) = this.fold(Pair(Int.MIN_VALUE, Int.MIN_VALUE)) { (max1, max2), num ->
+        when {
+            num > max1 -> Pair(num, max1)
+            num > max2 -> Pair(max1, num)
+            else -> Pair(max1, max2)
+        }
+    }
+    return max1 to max2
 }
 
 fun main() {
     val nums = listOf(743, 284, 677, -753, 995, -934, 102, 903, -83, -760, 77, -420)
     val expectedPair = Pair(995, 903)
-    val actualPair = nums.findHighestSumPairFunctional()
 
-    println("Pair that has highest sum in list $nums is $actualPair.")
-
-    require(expectedPair.isEqualsTo(actualPair)) {
-        "Actual pair that has highest sum in list $nums was $actualPair, but expected was $expectedPair"
+    val sortingTime = measureTimeMillis {
+        val actualPairSorting = nums.findHighestSumPairFunctional1()
+        println("Pair that has highest sum using sorting approach: $actualPairSorting.")
+        require(expectedPair.isEqualsTo(actualPairSorting)) {
+            "Actual pair using sorting approach was $actualPairSorting, but expected was $expectedPair"
+        }
     }
+    println("Sorting approach took $sortingTime ms")
+
+    val functionalTime = measureTimeMillis {
+        val actualPairFunctional = nums.findHighestSumPairFunctional()
+        println("Pair that has highest sum using functional approach: $actualPairFunctional.")
+        require(expectedPair.isEqualsTo(actualPairFunctional)) {
+            "Actual pair using functional approach was $actualPairFunctional, but expected was $expectedPair"
+        }
+    }
+    println("Functional approach took $functionalTime ms")
 }

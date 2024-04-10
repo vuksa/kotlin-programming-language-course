@@ -1,5 +1,7 @@
 package exercise3.task3
 
+import kotlin.math.abs
+
 /**
  * Task 3: Sherlock Validates the Words
  *
@@ -29,7 +31,26 @@ package exercise3.task3
  */
 
 internal fun isSherlockValid(s: String): String {
-    TODO("Implement me!!!")
+    val chMap = HashMap<Char, Int>()
+    val freqMap = HashMap<Int, Int>()
+    s.forEach {
+        chMap[it] = chMap.getOrDefault(it, 0) + 1
+    }
+    chMap.values.forEach {frequency ->
+        freqMap[frequency] = freqMap.getOrDefault(frequency, 0) + 1
+    }
+    // If all characters have the same frequency, then it's already valid.
+    if (freqMap.size == 1) return "YES"
+
+    // If there are more than 2 different frequencies, it's not valid.
+    if (freqMap.size > 2) return "NO"
+
+    val (first, second) = freqMap.keys.toList()
+    println("$first $second")
+    // If there's only one character with a frequency different from others by 1, then it's valid.
+    if (freqMap[first] == 1 && first == 1 || freqMap[second] == 1 && abs(first - second) == 1) return "YES"
+
+    return "NO"
 }
 
 fun main() {
@@ -37,6 +58,7 @@ fun main() {
 
     stringsToValidityCatalog.forEach { (string, expectedIsValid) ->
         val actualIsValid = isSherlockValid(string)
+        println(actualIsValid)
         val errorMessageFactory = { answer: String -> if (answer == "YES") "is valid" else "is not valid" }
 
         require(expectedIsValid == actualIsValid) {

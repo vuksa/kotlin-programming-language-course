@@ -1,9 +1,5 @@
 package exercise2.task5
 
-import org.jetbrains.exercise2.task5.Address
-import org.jetbrains.exercise2.task5.User
-import org.jetbrains.exercise2.task5.address
-import org.jetbrains.exercise2.task5.user
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
