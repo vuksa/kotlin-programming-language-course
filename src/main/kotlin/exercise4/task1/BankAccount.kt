@@ -50,9 +50,8 @@ fun main() {
     account.displayAccountInfo()
 }
 
-open class BankAccount(protected val accountNumber: String,
-                       protected val accountHolderName: String,
-                       protected var balance: Double = 0.0) {
+open class BankAccount(protected val accountNumber: String, protected val accountHolderName: String, protected var balance: Double = 0.0,) {
+
     open fun deposit(amount: Double): Boolean {
         if (amount <= 0) return false
         balance += amount

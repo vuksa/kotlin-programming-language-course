@@ -132,18 +132,16 @@ fun main() {
 class TransactionalBankAccount( accountNumber: String, accountHolderName: String, balance: Double = 0.0):
     BankAccount(accountNumber, accountHolderName, balance) {
 
-    private var transactions = mutableListOf<Transaction>()
+    private val transactions = mutableListOf<Transaction>()
 
-    fun getAllTransactions(): List<Transaction> {
-        transactions.sortByDescending { it.getTransactionDate() }
-        return transactions
-    }
+    fun getAllTransactions(): List<Transaction> = transactions.sortedByDescending { it.getTransactionDate() }
+
     fun getAllTransactionsBy(predicate: (Transaction) -> Boolean) = transactions.filter(predicate)
                                                                                 .sortedByDescending{it.getTransactionDate()}
     fun getTransactionsBetween(startDate: LocalDateTime, endDate: LocalDateTime) = getAllTransactionsBy { it.getTransactionDate() in startDate.rangeUntil(endDate) }
 
-    fun getAllFailedTransactions() = transactions.filter { it.getStatus() == TransactionStatus.FAILURE }
-    fun getAllSuccessfulTransactions() = transactions.filter { it.getStatus() == TransactionStatus.SUCCESS }
+    fun getAllFailedTransactions() = getAllTransactionsBy { it.getStatus() == TransactionStatus.FAILURE }
+    fun getAllSuccessfulTransactions() = getAllTransactionsBy { it.getStatus() == TransactionStatus.SUCCESS }
 
     fun getAllFailedDeposits() = getAllFailedTransactions().filter { it.getTransactionType() == TransactionType.DEPOSIT }
     fun getAllFailedWithdrawals() = getAllFailedTransactions().filter { it.getTransactionType() == TransactionType.WITHDRAW }
