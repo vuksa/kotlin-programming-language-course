@@ -34,19 +34,44 @@ package exercise4.task1
 
 
 fun main() {
-    TODO("Uncomment the lines above after the Bank Account class is implemented.")
     // Creating a Bank Account
-//    val account = BankAccount("123456789", "John Doe")
+    val account = BankAccount("123456789", "John Doe")
 
     // Displaying account information
-//    account.displayAccountInfo()
+    account.displayAccountInfo()
 
     // Depositing some money
-//    account.deposit(1000.0)
+   account.deposit(1000)
 
     // Withdrawing some money
-//    account.withdraw(500.0)
+    account.withdraw(500)
 
     // Displaying updated account information
-//    account.displayAccountInfo()
+    account.displayAccountInfo()
+}
+
+data class BankAccount(
+    val accountNumber: String,
+    val accountHolderName: String,
+    var balance: Int
+) {
+    constructor( accountNumber: String, accountHolderName: String): this(accountNumber, accountHolderName, 0)
+
+    fun displayAccountInfo() {
+        println(accountHolderName)
+        println(accountNumber)
+        println(balance)
+    }
+
+    fun deposit(amount: Int) {
+        balance += amount
+    }
+
+    fun withdraw(amount: Int) {
+        if(balance >= amount) {
+            balance -= amount
+        }
+    }
+
+
 }
