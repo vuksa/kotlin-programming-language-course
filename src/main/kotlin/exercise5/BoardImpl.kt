@@ -58,14 +58,14 @@ class GameBoardImpl(size: Int) : SquareBoardImpl(size), GameBoard {
 
     private val map = mutableMapOf<Cell, String?>()
 
-    override fun get(cell: Cell): String? {
-        return map.get(cell)
-    }
-
     init {
         board.flatten().forEach {
             map[it] = null
         }
+    }
+
+    override fun get(cell: Cell): String? {
+        return map.get(cell)
     }
 
     override fun set(cell: Cell, value: String?) {
