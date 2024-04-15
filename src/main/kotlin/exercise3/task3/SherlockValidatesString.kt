@@ -29,7 +29,24 @@ package exercise3.task3
  */
 
 internal fun isSherlockValid(s: String): String {
-    TODO("Implement me!!!")
+    val charCounts = s.groupBy { it }.values.map { it.size }
+
+    if (charCounts.toSet().size == 1) {
+        return "YES"
+    }
+
+    if (charCounts.toSet().size == 2) {
+        val minFreq = charCounts.minOrNull() ?: return "NO"
+        val maxFreq = charCounts.maxOrNull() ?: return "NO"
+        val minFreqCounter = charCounts.count { it == minFreq }
+        val maxFreqCounter = charCounts.count { it == maxFreq }
+
+        if ((minFreq == 1 && minFreqCounter == 1) || (maxFreq - minFreq == 1 && maxFreqCounter == 1)) {
+            return "YES"
+        }
+    }
+
+    return "NO"
 }
 
 fun main() {

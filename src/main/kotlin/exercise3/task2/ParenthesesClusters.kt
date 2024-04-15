@@ -24,7 +24,45 @@ package exercise3.task2
  */
 
 internal fun String.splitToBracketsClusters(): List<String> {
-    TODO("Implement me!!!")
+    val opening = "({["
+    val closing = ")}]"
+    val clusterList = ArrayList<String>()
+    val emptyList = ArrayList<String>()
+
+    var start = 0
+    var counter = 0
+    var balanced = true
+
+    for(i in this.indices) {
+        when (this[i]) {
+            '(' -> {
+                counter++
+                if (counter == 1) {
+                    start = i
+                }
+            }
+
+            ')' -> {
+                counter--
+                if (counter == 0) {
+                    clusterList.add(this.substring(start, i + 1))
+                } else if (counter < 0) {
+                    balanced = false
+                }
+            }
+        }
+    }
+
+    if(counter != 0) {
+        balanced = false
+    }
+
+    if(balanced) {
+        return clusterList
+    }
+    else {
+        return emptyList
+    }
 }
 
 fun main() {
