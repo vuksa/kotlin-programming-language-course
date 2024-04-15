@@ -1,12 +1,9 @@
 package exercise5
 
-// TODO Instantiate SquareBoard
 fun createSquareBoard(width: Int): SquareBoard = SquareBoardImpl(width)
 
-// TODO Instantiate GameBoard
 fun <T> createGameBoard(width: Int): GameBoard = GameBoardImpl(width)
 
-// TODO Implement SquareBoard Interface
 open class SquareBoardImpl(size: Int) : SquareBoard {
     protected val board = List(size) { x ->
         List(size) { y ->
