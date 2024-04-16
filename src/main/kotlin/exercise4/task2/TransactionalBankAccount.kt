@@ -188,7 +188,7 @@ private fun LocalDateTime.prettyPrint(): String {
 fun main() {
     println(currentTime.prettyPrint())
     // Creating a Transactional Bank Account
-    val account = TransactionalBankAccount("123456789", "John Doe")
+    val account = TransactionalBankAccount("123456789", "John Doe", 0.0)
 
     // Displaying account information
     account.displayAccountInfo()
