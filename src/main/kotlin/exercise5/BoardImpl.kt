@@ -2,19 +2,14 @@ package exercise5
 
 import javax.sql.rowset.serial.SQLOutputImpl
 
-// TODO Instantiate SquareBoard
 fun createSquareBoard(width: Int): SquareBoard {
     return SquareBoardImpl(width)
 }
 
-
-
-// TODO Instantiate GameBoard
 fun <T> createGameBoard(width: Int): GameBoard = TODO("GameBoardImpl(width)")
 
-// TODO Implement SquareBoard Interface
-class SquareBoardImpl(size: Int) : SquareBoard {
-    private val board: List<List<Cell>> = List(size) { x ->
+open class SquareBoardImpl(size: Int) : SquareBoard {
+    val board: List<List<Cell>> = List(size) { x ->
         List(size) { y ->
             Cell(x + 1, y + 1)
         }
@@ -59,8 +54,35 @@ class SquareBoardImpl(size: Int) : SquareBoard {
 
 }
 
-// TODO extend SquareBoardImpl and implement GameBoard interface
-class GameBoardImpl(size: Int)
+
+class GameBoardImpl(size: Int) : SquareBoardImpl(size), GameBoard {
+    private val valMap = mutableMapOf<Cell, String?>()
+
+    override fun get(cell: Cell): String? {
+        return valMap.get(cell)
+    }
+
+    override fun set(cell: Cell, value: String?) {
+        valMap[cell] = value
+    }
+
+    override fun filter(predicate: (String?) -> Boolean): Collection<Cell> {
+        return valMap.filter { predicate(it.value) }.keys
+    }
+
+    override fun find(predicate: (String?) -> Boolean): Cell? {
+        return valMap.entries.find { predicate(it.value) }?.key
+    }
+
+    override fun any(predicate: (String?) -> Boolean): Boolean {
+        return valMap.entries.any { predicate(it.value) }
+    }
+
+    override fun all(predicate: (String?) -> Boolean): Boolean {
+        return valMap.entries.all { predicate(it.value) }
+    }
+
+}
 
 fun main() {
     var Board = createSquareBoard(2)

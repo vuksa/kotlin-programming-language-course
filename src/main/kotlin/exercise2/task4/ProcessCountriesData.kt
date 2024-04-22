@@ -67,11 +67,15 @@ internal fun List<Country>.findCountryWithBiggestPopulation(): Country {
 }
 
 internal fun List<Country>.findCountryWithHighestPopulationDensity(): Country {
-    return countries.maxBy { it.population/it.totalAreaInSquareKilometers }
+    return countries.maxBy {
+        it.population/it.totalAreaInSquareKilometers
+    }
 }
 
 internal fun List<Country>.findCountryWithLowestPopulationDensity(): Country {
-    return countries.minBy { it.population/it.totalAreaInSquareKilometers }
+    return countries.minBy {
+        it.population/it.totalAreaInSquareKilometers
+    }
 }
 
 internal fun List<Country>.findLanguageSpokenInMostCountries(): String {

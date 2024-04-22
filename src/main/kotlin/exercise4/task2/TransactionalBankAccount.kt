@@ -1,5 +1,6 @@
 package exercise4.task2
 
+import exercise4.task1.BankAccount
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -78,7 +79,122 @@ import java.util.*
  *      ```
  */
 
+enum class TransactionType {
+    DEPOSIT, WITHDRAWAL
+}
 
+enum class TransactionStatus {
+    SUCCESS, FAILURE
+}
+
+data class Transaction(
+    val transactionDate: LocalDateTime,
+    val transactionType: TransactionType,
+    val amount: Double,
+    val oldBalance: Double,
+    val newBalance: Double,
+    val transactionStatus: TransactionStatus
+)
+
+class TransactionalBankAccount(
+    accountNumber: String,
+    accountHolderName: String,
+) : BankAccount(accountNumber, accountHolderName) {
+
+    private val transactionList = mutableListOf<Transaction>()
+
+
+    override open fun deposit(amount: Double) {
+        val oldBalance = getBalance()
+        super.deposit(amount)
+        val newBalance = oldBalance + amount
+
+        transactionList.add(Transaction(currentTime, TransactionType.DEPOSIT, amount, oldBalance, newBalance, TransactionStatus.SUCCESS))
+    }
+
+    override open fun withdraw(amount: Double) : Boolean {
+        val oldBalance = getBalance()
+        if(super.withdraw(amount)) {
+            val newBalance = oldBalance - amount
+            transactionList.add(Transaction(currentTime, TransactionType.WITHDRAWAL, amount, oldBalance, newBalance, TransactionStatus.SUCCESS))
+            return true
+        }
+        else {
+            transactionList.add(Transaction(currentTime, TransactionType.WITHDRAWAL, amount, oldBalance, oldBalance, TransactionStatus.SUCCESS))
+            return false
+        }
+    }
+
+    fun getAllTransactions(): List<Transaction> {
+        return transactionList.sortedByDescending { it.transactionDate }
+    }
+
+    fun getAllTransactionsBy(predicate: (Transaction) -> Boolean): List<Transaction> {
+        return transactionList.filter { predicate(it) }
+            .sortedByDescending { it.transactionDate }
+    }
+
+    fun getTransactionsBetween(startDate: LocalDateTime, endDate: LocalDateTime): List<Transaction> {
+        return transactionList.filter { it.transactionDate >= startDate && it.transactionDate <= endDate }
+            .sortedByDescending { it.transactionDate }
+    }
+
+    fun getAllFailedTransactions(): List<Transaction> {
+        return transactionList.filter { it.transactionStatus == TransactionStatus.FAILURE }
+            .sortedByDescending { it.transactionDate }
+    }
+
+    fun getAllSuccessfulTransactions(): List<Transaction> {
+        return transactionList.filter { it.transactionStatus == TransactionStatus.SUCCESS }
+            .sortedByDescending { it.transactionDate }
+    }
+
+    fun getAllFailedDeposits(): List<Transaction> {
+        return transactionList.filter { it.transactionType == TransactionType.DEPOSIT
+                && it.transactionStatus == TransactionStatus.FAILURE }
+            .sortedByDescending { it.transactionDate }
+    }
+
+    fun getAllFailedWithdrawals(): List<Transaction> {
+        return transactionList.filter { it.transactionType == TransactionType.WITHDRAWAL
+                && it.transactionStatus == TransactionStatus.FAILURE }
+            .sortedByDescending { it.transactionDate }
+    }
+
+    fun getAllSuccessfulDeposits(): List<Transaction> {
+        return transactionList.filter { it.transactionType == TransactionType.DEPOSIT
+                && it.transactionStatus == TransactionStatus.SUCCESS }
+            .sortedByDescending { it.transactionDate }
+    }
+
+    fun getAllSuccessfulWithdrawals(): List<Transaction> {
+        return transactionList.filter { it.transactionType == TransactionType.WITHDRAWAL
+                && it.transactionStatus == TransactionStatus.SUCCESS }
+            .sortedByDescending { it.transactionDate }
+    }
+
+    override open fun displayAccountInfo() {
+        super.displayAccountInfo()
+        println("Transactions: ")
+
+        if(transactionList.size < 1) {
+            println("No transactions to display.")
+            return
+        }
+
+        for(transaction in transactionList) {
+            println("Transaction Date: ${transaction.transactionDate.prettyPrint()}")
+            println("Transaction Type: ${transaction.transactionType}")
+            println("Amount: ${transaction.amount}")
+            println("Old Balance: ${transaction.oldBalance}")
+            println("New Balance: ${transaction.newBalance}")
+            println("Status: ${transaction.transactionStatus}")
+            println()
+        }
+    }
+
+
+}
 
 
 private val currentTime: LocalDateTime get() = LocalDateTime.now()
@@ -91,17 +207,17 @@ private fun LocalDateTime.prettyPrint(): String {
 fun main() {
     println(currentTime.prettyPrint())
     // Creating a Transactional Bank Account
-//    val account = TransactionalBankAccount("123456789", "John Doe")
+    val account = TransactionalBankAccount("123456789", "John Doe")
 
     // Displaying account information
-//    account.displayAccountInfo()
+    account.displayAccountInfo()
 
     // Depositing some money
-//    account.deposit(1000.0)
+    account.deposit(1000.0)
 
     // Withdrawing some money
-//    account.withdraw(500.0)
+    account.withdraw(500.0)
 
-    // Displaying updated account information
-//    account.displayAccountInfo()
+//     Displaying updated account information
+    account.displayAccountInfo()
 }
