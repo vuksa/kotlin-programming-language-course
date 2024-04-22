@@ -51,9 +51,9 @@ fun main() {
 }
 
 open class BankAccount(
-    val accountNumber: String,
-    val accountHolderName: String,
-    var balance: Double
+    private val accountNumber: String,
+    private val accountHolderName: String,
+    private var balance: Double
 ) {
     constructor( accountNumber: String, accountHolderName: String): this(accountNumber, accountHolderName, 0.0)
 
