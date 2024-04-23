@@ -17,7 +17,7 @@ package exercise3.task3
  * s = abcc
  * This is a valid string because we can remove one `c` and have `1` of each character in the remaining string.
  *
- * s = abcc
+ * s = abccc
  * This string is not valid as we can only remove `1` occurrence of `c`. That leaves character frequencies of
  * {`a`: 1, `b`: 1, `c`: 2}.
  * ```

@@ -40,3 +40,10 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/.idea/.name
+/.idea/misc.xml
+/.idea/uiDesigner.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml
+/.idea/kotlinc.xml
+/.idea/gradle.xml

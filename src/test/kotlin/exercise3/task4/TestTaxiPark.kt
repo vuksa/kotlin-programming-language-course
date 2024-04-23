@@ -48,11 +48,14 @@ internal class TestTaxiPark {
                 trip(3, 4),
                 trip(1, 5),
                 trip(2, 5),
-                trip(2, 2)
+                trip(2, 5),
+                trip(3, 3),
+                trip(2, 4),
+                trip(2, 2),
             )
         assertEquals(
-            passengers(1, 2, 3, 4, 5),
-            tp.findFaithfulPassengers(0),
+            passengers(4, 5),
+            tp.findFaithfulPassengers(3),
             "Wrong result for 'findFaithfulPassengers()'. MinTrips: 3." + tp.display()
         )
     }
