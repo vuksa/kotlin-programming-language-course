@@ -7,6 +7,12 @@ package exercise6.taskProjections.task4
  * that accepts two arrays with a generic type of Any and copy elements from the first array to the second one.
 **/
 
+fun <Any> copy(ints: Array<Any>, any: Array<in Any>){
+    for (i in ints.indices){
+        any[i] = ints[i]
+    }
+}
+
 fun main() {
     val ints = arrayOf(1, 2, 3)
     val any = Array<Any>(3) { "" }
@@ -17,8 +23,7 @@ fun main() {
     println("_______")
     println("_______")
 
-    // TODO: uncomment this code
-   // copy(ints, any)
+    copy(ints, any)
 
     ints.forEach{ print("$it ") }
     println()
