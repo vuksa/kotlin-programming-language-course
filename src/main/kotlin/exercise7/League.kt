@@ -133,4 +133,47 @@ internal interface LeagueApi {
  * and [teams] are all mentioned in the [fixtures] list.
  */
 
-// TODO Implement League class that implements LeagueApi interface.
+class League(
+    override val teams: List<Team>,
+    private val fixtures: List<Fixture>
+) : LeagueApi {
+    override val leagueTable: List<LeagueTableEntry>
+        get() = TODO("Not yet implemented")
+    override val leagueWinner: Team
+        get() = TODO("Not yet implemented")
+    override val teamWithMostWins: Team
+        get() = TODO("Not yet implemented")
+    override val teamWithMostDraws: Team
+        get() = TODO("Not yet implemented")
+    override val teamWithMostLoses: Team
+        get() = TODO("Not yet implemented")
+    override val teamWithBestGoalDifference: Team
+        get() = TODO("Not yet implemented")
+
+
+    override fun teamsWithBestDefence(numOfTeams: Int): List<Team> {
+        TODO("Not yet implemented")
+    }
+
+    override fun teamsWithBestOffense(numOfTeams: Int): List<Team> {
+        TODO("Not yet implemented")
+    }
+
+    override fun numOfGoalsTeamScoredAgainst(scorerTeam: Team, against: Team): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun numOfGoalsTeamConcededAgainst(concededTeam: Team, against: Team): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun displayLeagueTableAtFixture(fixtureId: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun displayLeagueTable() {
+        TODO("Not yet implemented")
+    }
+
+
+}
