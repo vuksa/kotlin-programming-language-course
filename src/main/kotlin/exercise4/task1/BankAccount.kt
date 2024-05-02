@@ -41,42 +41,36 @@ fun main() {
     account.displayAccountInfo()
 
     // Depositing some money
-   account.deposit(1000.0)
+   account.deposit(1000)
 
     // Withdrawing some money
-    account.withdraw(500.0)
+    account.withdraw(500)
 
     // Displaying updated account information
     account.displayAccountInfo()
 }
 
-open class BankAccount(
-    private val accountNumber: String,
-    private val accountHolderName: String,
-    private var balance: Double
+data class BankAccount(
+    val accountNumber: String,
+    val accountHolderName: String,
+    var balance: Int
 ) {
-    constructor( accountNumber: String, accountHolderName: String): this(accountNumber, accountHolderName, 0.0)
+    constructor( accountNumber: String, accountHolderName: String): this(accountNumber, accountHolderName, 0)
 
-    open fun displayAccountInfo() {
+    fun displayAccountInfo() {
         println(accountHolderName)
         println(accountNumber)
         println(balance)
     }
 
-    open fun deposit(amount: Double) {
+    fun deposit(amount: Int) {
         balance += amount
     }
 
-    open fun withdraw(amount: Double): Boolean {
+    fun withdraw(amount: Int) {
         if(balance >= amount) {
             balance -= amount
-            return true
         }
-        return false
-    }
-
-    fun getBalance() : Double {
-        return balance
     }
 
 

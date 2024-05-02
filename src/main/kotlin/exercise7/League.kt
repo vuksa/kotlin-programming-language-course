@@ -138,29 +138,61 @@ class League(
     private val fixtures: List<Fixture>
 ) : LeagueApi {
     override val leagueTable: List<LeagueTableEntry>
-        get() = TODO("Not yet implemented")
+        get() {
+            val tableEntries = mutableListOf<LeagueTableEntry>()
+
+            for(team in teams) {
+                val gamesPlayed = fixtures.flatMap { it.matches }
+                    .count{ it.homeTeam == team || it.awayTeam == team }
+                val wins = fixtures.flatMap { it.matches }
+                    .count { match ->
+                        (match.homeTeam == team && match.homeTeamScore > match.awayTeamScore) ||
+                                (match.awayTeam == team && match.awayTeamScore > match.homeTeamScore)
+                    }
+                val draws = fixtures.flatMap { it.matches}
+                    .count { match ->
+                        (match.homeTeam == team || match.awayTeam == team) && match.homeTeamScore == match.awayTeamScore
+                    }
+                val loses = gamesPlayed - wins - draws
+                val goalsScored = fixtures.flatMap { it.matches }
+                    .filter { it.homeTeam == team || it.awayTeam == team}
+                    .sumBy { if (it.homeTeam == team) it.homeTeamScore else it.awayTeamScore}
+                val goalsConceded = fixtures.flatMap { it.matches }
+                    .filter { it.homeTeam == team || it.awayTeam == team }
+                    .sumBy { if (it.homeTeam == team) it.awayTeamScore else it.homeTeamScore }
+
+                tableEntries.add(LeagueTableEntry(team, gamesPlayed, wins, loses, draws, goalsScored, goalsConceded))
+            }
+            return tableEntries.sortedByDescending { it.totalPoints }
+        }
     override val leagueWinner: Team
-        get() = TODO("Not yet implemented")
+        get() = leagueTable.get(0).team
     override val teamWithMostWins: Team
-        get() = TODO("Not yet implemented")
+        get() = leagueTable.sortedByDescending { it.wins }
+                    .get(0).team
     override val teamWithMostDraws: Team
-        get() = TODO("Not yet implemented")
+        get() = leagueTable.sortedByDescending { it.draws }
+                    .get(0).team
     override val teamWithMostLoses: Team
-        get() = TODO("Not yet implemented")
+        get() = leagueTable.sortedByDescending { it.loses }
+                    .get(0).team
     override val teamWithBestGoalDifference: Team
-        get() = TODO("Not yet implemented")
+        get() = leagueTable.sortedByDescending { (it.totalScoredGoals - it.totalConcededGoals) }
+                    .get(0).team
 
 
     override fun teamsWithBestDefence(numOfTeams: Int): List<Team> {
-        TODO("Not yet implemented")
+        return leagueTable.sortedBy { it.totalConcededGoals }
+            .take(numOfTeams).map { it.team }
     }
 
     override fun teamsWithBestOffense(numOfTeams: Int): List<Team> {
-        TODO("Not yet implemented")
+        return leagueTable.sortedByDescending { it.totalScoredGoals }
+            .take(numOfTeams).map { it.team}
     }
 
     override fun numOfGoalsTeamScoredAgainst(scorerTeam: Team, against: Team): Int {
-        TODO("Not yet implemented")
+        TODO("")
     }
 
     override fun numOfGoalsTeamConcededAgainst(concededTeam: Team, against: Team): Int {
@@ -172,8 +204,14 @@ class League(
     }
 
     override fun displayLeagueTable() {
-        TODO("Not yet implemented")
+        println("P | Team name | Games Played | Wins | Draws | Loses | GS | GC | Total Points")
+        var i = 1
+        for(leagueTableEntry in leagueTable.sortedByDescending { it.totalPoints }) {
+            println("$i | $leagueTableEntry")
+            i++
+        }
     }
 
 
 }
+

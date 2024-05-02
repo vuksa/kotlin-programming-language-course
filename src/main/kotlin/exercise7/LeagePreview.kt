@@ -26,6 +26,7 @@ fun main() {
 
     // Create league object
     val league: LeagueApi = League(teams, fixtures)
+    println(league.displayLeagueTable())
     //league.displayLeagueTable()
 
     //league.displayLeagueTableAtFixture(13)
