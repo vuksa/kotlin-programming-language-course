@@ -5,7 +5,11 @@ package exercise7
  *
  * @property name The name of the team.
  */
-data class Team(val name: String)
+data class Team(val name: String) {
+    override fun toString(): String {
+        return "$name"
+    }
+}
 
 /**
  * Represents a match between two teams.
@@ -20,7 +24,11 @@ data class Match(
     val awayTeam: Team,
     val homeTeamScore: Int,
     val awayTeamScore: Int
-)
+) {
+    override fun toString(): String {
+        return "$homeTeam, $awayTeam, $awayTeamScore, $homeTeamScore"
+    }
+}
 
 /**
  * Represents a fixture which contains a fixture ID and a list of matches.
@@ -58,5 +66,9 @@ data class LeagueTableEntry(
      * The Team earns 3 points for every win, 1 point for a draw, and zero points for a loss.
      */
     val totalPoints: Int get() = (wins * 3) + (draws * 1)
+
+    override fun toString(): String {
+        return "${team.name}, $totalGamesPlayed, $wins, $loses, $draws, $totalScoredGoals, $totalConcededGoals"
+    }
 
 }

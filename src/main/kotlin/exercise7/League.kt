@@ -141,22 +141,22 @@ class League(
         get() {
             val tableEntries = mutableListOf<LeagueTableEntry>()
 
-            for(team in teams) {
+            for (team in teams) {
                 val gamesPlayed = fixtures.flatMap { it.matches }
-                    .count{ it.homeTeam == team || it.awayTeam == team }
+                    .count { it.homeTeam == team || it.awayTeam == team }
                 val wins = fixtures.flatMap { it.matches }
                     .count { match ->
                         (match.homeTeam == team && match.homeTeamScore > match.awayTeamScore) ||
                                 (match.awayTeam == team && match.awayTeamScore > match.homeTeamScore)
                     }
-                val draws = fixtures.flatMap { it.matches}
+                val draws = fixtures.flatMap { it.matches }
                     .count { match ->
                         (match.homeTeam == team || match.awayTeam == team) && match.homeTeamScore == match.awayTeamScore
                     }
                 val loses = gamesPlayed - wins - draws
                 val goalsScored = fixtures.flatMap { it.matches }
-                    .filter { it.homeTeam == team || it.awayTeam == team}
-                    .sumBy { if (it.homeTeam == team) it.homeTeamScore else it.awayTeamScore}
+                    .filter { it.homeTeam == team || it.awayTeam == team }
+                    .sumBy { if (it.homeTeam == team) it.homeTeamScore else it.awayTeamScore }
                 val goalsConceded = fixtures.flatMap { it.matches }
                     .filter { it.homeTeam == team || it.awayTeam == team }
                     .sumBy { if (it.homeTeam == team) it.awayTeamScore else it.homeTeamScore }
@@ -169,16 +169,16 @@ class League(
         get() = leagueTable.get(0).team
     override val teamWithMostWins: Team
         get() = leagueTable.sortedByDescending { it.wins }
-                    .get(0).team
+            .get(0).team
     override val teamWithMostDraws: Team
         get() = leagueTable.sortedByDescending { it.draws }
-                    .get(0).team
+            .get(0).team
     override val teamWithMostLoses: Team
         get() = leagueTable.sortedByDescending { it.loses }
-                    .get(0).team
+            .get(0).team
     override val teamWithBestGoalDifference: Team
         get() = leagueTable.sortedByDescending { (it.totalScoredGoals - it.totalConcededGoals) }
-                    .get(0).team
+            .get(0).team
 
 
     override fun teamsWithBestDefence(numOfTeams: Int): List<Team> {
@@ -188,7 +188,7 @@ class League(
 
     override fun teamsWithBestOffense(numOfTeams: Int): List<Team> {
         return leagueTable.sortedByDescending { it.totalScoredGoals }
-            .take(numOfTeams).map { it.team}
+            .take(numOfTeams).map { it.team }
     }
 
     override fun numOfGoalsTeamScoredAgainst(scorerTeam: Team, against: Team): Int {
@@ -204,10 +204,25 @@ class League(
     }
 
     override fun displayLeagueTable() {
-        println("P | Team name | Games Played | Wins | Draws | Loses | GS | GC | Total Points")
+        println("P | Team name      | Games Played | Wins | Draws | Loses | GS | GC | Total Points")
         var i = 1
-        for(leagueTableEntry in leagueTable.sortedByDescending { it.totalPoints }) {
-            println("$i | $leagueTableEntry")
+        for (leagueTableEntry in leagueTable.sortedWith(compareByDescending<LeagueTableEntry> { it.totalPoints }
+            .thenByDescending { it.totalScoredGoals - it.totalConcededGoals })) {
+            val teamName = leagueTableEntry.team.name
+            val gamesPlayed = leagueTableEntry.totalGamesPlayed
+            val wins = leagueTableEntry.wins
+            val draws = leagueTableEntry.draws
+            val loses = leagueTableEntry.loses
+            val goalsScored = leagueTableEntry.totalScoredGoals
+            val goalsConceded = leagueTableEntry.totalConcededGoals
+            val totalPoints = leagueTableEntry.totalPoints
+
+            println(
+                String.format(
+                    "%-2d| %-15s| %-13d| %-5d| %-6d| %-6d| %-3d| %-3d| %-13d",
+                    i, teamName, gamesPlayed, wins, draws, loses, goalsScored, goalsConceded, totalPoints
+                )
+            )
             i++
         }
     }
