@@ -20,7 +20,7 @@ class LeagueTest : TestCase() {
                 fixture.matches.flatMap { match -> listOf(match.awayTeam, match.homeTeam) }
             }.distinct()
 
-            league = TODO("Initialize league: League(teams, fixtures) at LeagueTest#L23")
+            league = League(teams, fixtures)
         }
     }
 
