@@ -39,7 +39,11 @@ data class Match(
 data class Fixture(
     val fixtureId: Int,
     val matches: List<Match>
-)
+) {
+    override fun toString(): String {
+        return "Fixture ID: $fixtureId Matches: $matches"
+    }
+}
 
 /**
  * Represents a team's entry in a league table.

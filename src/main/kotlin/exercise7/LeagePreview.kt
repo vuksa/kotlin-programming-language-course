@@ -27,10 +27,7 @@ fun main() {
         .toList<Team>().distinct()
 
 
-
-    // Create league object
     val league: LeagueApi = League(teams, fixtures)
-    league.displayLeagueTable()
+    league.displayLeagueTableAtFixture(2)
 
-    //league.displayLeagueTableAtFixture(13)
 }
