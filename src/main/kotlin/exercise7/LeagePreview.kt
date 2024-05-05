@@ -28,6 +28,8 @@ fun main() {
 
 
     val league: LeagueApi = League(teams, fixtures)
-    league.displayLeagueTableAtFixture(2)
+    league.displayLeagueTable()
+
+    league.displayLeagueTableAtFixture(13)
 
 }
