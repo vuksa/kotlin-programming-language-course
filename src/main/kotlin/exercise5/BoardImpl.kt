@@ -1,100 +1,109 @@
 package exercise5
 
 fun createSquareBoard(width: Int): SquareBoard = SquareBoardImpl(width)
-fun <T> createGameBoard(width: Int): GameBoard = GameBoardImpl(width)
 
-// TODO Implement SquareBoard Interface
-class SquareBoardImpl(size: Int): SquareBoard {
-    private val board = List(size) { i -> List(size) {
-        j -> Cell(i+1, j+1)
-    } }
+// TODO Instantiate GameBoard
+fun <T> createGameBoard(width: Int): GameBoard = TODO("GameBoardImpl(width)")
 
-    override val width: Int
-        get() = board.size
+open class SquareBoardImpl(private val size: Int): SquareBoard {
+    final override val width: Int
+        get() = size
+
+    private val matrix: Array<Array<Cell>> = Array(width) {
+        Array<Cell>(width){
+            Cell(1,1)
+        }
+    }
+
+    init {
+        for (i in 1..width) {
+            for (j in 1..width) {
+                matrix[i-1][j-1] = Cell(i,j)
+            }
+        }
+    }
 
     override fun getCellOrNull(i: Int, j: Int): Cell? {
-        board.forEach { if (Cell(i, j) in it) return board[i][j] }
+        if(i in 0..width && j in 0..width) return matrix[i][j]
         return null
     }
 
     override fun getCell(i: Int, j: Int): Cell {
-        if (getCellOrNull(i, j) != null) return board[i][j]
-        throw IllegalArgumentException()
+        require(i in 0..width && j in 0..width)
+        return matrix[i][j]
     }
 
     override fun getAllCells(): Collection<Cell> {
-        return board.flatten()
+        val result = mutableListOf<Cell>()
+        matrix.forEach { it.forEach { cell -> result.add(cell) } }
+        return result
     }
 
     override fun getRow(i: Int, jRange: IntProgression): List<Cell> {
-        return board.forEach {  }
+        val row = getAllCells().filter { cell -> cell.i == i }
+        val result = row.filter { cell -> cell.j in jRange }
+        if(jRange.first > jRange.last) return result.reversed()
+        return result
     }
 
     override fun getColumn(iRange: IntProgression, j: Int): List<Cell> {
-        TODO("Not yet implemented")
+        val column = getAllCells().filter { cell -> cell.j == j }
+        val result = column.filter { cell -> cell.i in iRange }
+        if(iRange.first > iRange.last) return result.reversed()
+        return result
     }
 
     override fun Cell.getNeighbour(direction: Direction): Cell? {
-        TODO("Not yet implemented")
+        return when (direction){
+            Direction.UP -> getCellOrNull(i-1, j)
+            Direction.DOWN -> getCellOrNull(i+1, j)
+            Direction.LEFT -> getCellOrNull(i, j-1)
+            Direction.RIGHT -> getCellOrNull(i, j+1)
+        }
     }
 
 }
 
-fun main() {
-    val sboard = createSquareBoard(6)
-    sboard.getRow(1, 5..2).forEach { println(it) }
-}
+class GameBoardImpl(size: Int): GameBoard, SquareBoardImpl(size) {
 
-// TODO extend SquareBoardImpl and implement GameBoard interface
-class GameBoardImpl(size: Int): GameBoard {
+    private val mapa:MutableMap<Cell,String> = mutableMapOf<Cell,String>()
+
+
     override fun get(cell: Cell): String? {
-        TODO("Not yet implemented")
+        return mapa[cell]
     }
 
     override fun set(cell: Cell, value: String?) {
-        TODO("Not yet implemented")
+       if(value!=null) mapa[cell] = value
     }
 
     override fun filter(predicate: (String?) -> Boolean): Collection<Cell> {
-        TODO("Not yet implemented")
+        val result = mutableListOf<Cell>()
+        mapa.forEach{
+            if(predicate(it.value)) result.add(it.key)
+        }
+        return result
     }
 
     override fun find(predicate: (String?) -> Boolean): Cell? {
-        TODO("Not yet implemented")
+        mapa.forEach{
+            if(predicate(it.value)) return it.key
+        }
+        return null
     }
 
     override fun any(predicate: (String?) -> Boolean): Boolean {
-        TODO("Not yet implemented")
+        mapa.forEach{
+            if(predicate(it.value)) return true
+        }
+        return false
     }
 
     override fun all(predicate: (String?) -> Boolean): Boolean {
-        TODO("Not yet implemented")
+        mapa.forEach{
+            if(!predicate(it.value)) return false
+        }
+        return true
     }
 
-    override val width: Int
-        get() = TODO("Not yet implemented")
-
-    override fun getCellOrNull(i: Int, j: Int): Cell? {
-        TODO("Not yet implemented")
-    }
-
-    override fun getCell(i: Int, j: Int): Cell {
-        TODO("Not yet implemented")
-    }
-
-    override fun getAllCells(): Collection<Cell> {
-        TODO("Not yet implemented")
-    }
-
-    override fun getRow(i: Int, jRange: IntProgression): List<Cell> {
-        TODO("Not yet implemented")
-    }
-
-    override fun getColumn(iRange: IntProgression, j: Int): List<Cell> {
-        TODO("Not yet implemented")
-    }
-
-    override fun Cell.getNeighbour(direction: Direction): Cell? {
-        TODO("Not yet implemented")
-    }
 }
