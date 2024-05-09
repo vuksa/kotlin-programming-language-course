@@ -2,24 +2,15 @@ package exercise5
 
 fun createSquareBoard(width: Int): SquareBoard = SquareBoardImpl(width)
 
-// TODO Instantiate GameBoard
-fun <T> createGameBoard(width: Int): GameBoard = TODO("GameBoardImpl(width)")
+fun <T> createGameBoard(width: Int): GameBoard<T> = GameBoardImpl(width)
 
 open class SquareBoardImpl(private val size: Int): SquareBoard {
     final override val width: Int
         get() = size
 
-    private val matrix: Array<Array<Cell>> = Array(width) {
-        Array<Cell>(width){
-            Cell(1,1)
-        }
-    }
-
-    init {
-        for (i in 1..width) {
-            for (j in 1..width) {
-                matrix[i-1][j-1] = Cell(i,j)
-            }
+    private val matrix: Array<Array<Cell>> = Array(width) { i ->
+        Array(width) { j ->
+            Cell(i+1,j+1)
         }
     }
 
@@ -61,48 +52,38 @@ open class SquareBoardImpl(private val size: Int): SquareBoard {
             Direction.RIGHT -> getCellOrNull(i, j+1)
         }
     }
-
 }
 
-class GameBoardImpl(size: Int): GameBoard, SquareBoardImpl(size) {
+class GameBoardImpl<T>(size: Int): GameBoard<T>, SquareBoardImpl(size) {
 
-    private val mapa:MutableMap<Cell,String> = mutableMapOf<Cell,String>()
+    private val matrix: MutableMap<Cell, T> = mutableMapOf()
 
-
-    override fun get(cell: Cell): String? {
-        return mapa[cell]
+    override fun get(cell: Cell): T? {
+        return matrix[cell]
     }
 
-    override fun set(cell: Cell, value: String?) {
-       if(value!=null) mapa[cell] = value
+    override fun set(cell: Cell, value: T?) {
+       if(value != null) matrix[cell] = value
     }
 
-    override fun filter(predicate: (String?) -> Boolean): Collection<Cell> {
-        val result = mutableListOf<Cell>()
-        mapa.forEach{
-            if(predicate(it.value)) result.add(it.key)
-        }
+    override fun filter(predicate: (T?) -> Boolean): Collection<Cell> {
+        val result: MutableList<Cell> = mutableListOf()
+        matrix.forEach { if(predicate(it.value)) result.add(it.key) }
         return result
     }
 
-    override fun find(predicate: (String?) -> Boolean): Cell? {
-        mapa.forEach{
-            if(predicate(it.value)) return it.key
-        }
+    override fun find(predicate: (T?) -> Boolean): Cell? {
+        matrix.forEach { if(predicate(it.value)) return it.key }
         return null
     }
 
-    override fun any(predicate: (String?) -> Boolean): Boolean {
-        mapa.forEach{
-            if(predicate(it.value)) return true
-        }
+    override fun any(predicate: (T?) -> Boolean): Boolean {
+        matrix.forEach { if(predicate(it.value)) return true }
         return false
     }
 
-    override fun all(predicate: (String?) -> Boolean): Boolean {
-        mapa.forEach{
-            if(!predicate(it.value)) return false
-        }
+    override fun all(predicate: (T?) -> Boolean): Boolean {
+        matrix.forEach { if(!predicate(it.value)) return false }
         return true
     }
 
