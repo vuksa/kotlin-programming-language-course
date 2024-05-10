@@ -49,7 +49,7 @@ private data class SetIntersection<S>(val size: Int, val lowerBound: S?, val upp
  * no intersection at all. If the intersection is likely to be not empty, it estimates the intersection size as the mean
  * of the set sizes.
  */
-private fun <T> estimateIntersectionSize(treeNode: TreeNode<SetIntersection<T>>): Int {
+private fun <T: Comparable<T>> estimateIntersectionSize(treeNode: TreeNode<SetIntersection<T>>): Int {
     val leftNode = treeNode.left ?: return treeNode.value.size
     val rightNode = treeNode.right ?: return treeNode.value.size
 
@@ -60,9 +60,8 @@ private fun <T> estimateIntersectionSize(treeNode: TreeNode<SetIntersection<T>>)
         return 0
     }
 
-    TODO("Uncomment code bellow and make the file compilable")
-//    if (leftNode.value.upperBound < rightNode.value.lowerBound || leftNode.value.lowerBound > rightNode.value.upperBound) {
-//        return 0
-//    }
-//    return (leftNode.value.size + rightNode.value.size)/2
+    if (leftNode.value.upperBound < rightNode.value.lowerBound || leftNode.value.lowerBound > rightNode.value.upperBound) {
+        return 0
+    }
+    return (leftNode.value.size + rightNode.value.size)/2
 }
