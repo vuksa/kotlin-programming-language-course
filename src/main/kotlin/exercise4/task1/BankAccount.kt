@@ -33,20 +33,56 @@ package exercise4.task1
  */
 
 
+open class BankAccount(
+    private val accountHolderName: String,
+    private val accountNumber: String,
+    protected var balance: Int
+) {
+
+    constructor(accountHolderName: String, accountNumber: String) : this(accountHolderName, accountNumber, 0)
+
+    open fun deposit(amount: Int): Boolean {
+        balance += amount
+        return true
+    }
+
+    open fun withdraw(amount: Int): Boolean {
+        if (amount > balance) return false
+
+        balance -= amount
+
+        return true
+    }
+
+    open fun displayAccountInfo() {
+        val template = """
+            Account Holder: [ACCOUNT_HOLDER_NAME]
+            Account Number: [ACCOUNT_NUMBER]
+            Balance: [ACCOUNT_BALANCE]
+        """.trimIndent()
+
+        template
+            .replace("[ACCOUNT_HOLDER_NAME]", accountHolderName)
+            .replace("[ACCOUNT_NUMBER]", accountNumber)
+            .replace("[ACCOUNT_BALANCE]", balance.toString())
+            .let { println(it) }
+    }
+}
+
+
 fun main() {
-    TODO("Uncomment the lines above after the Bank Account class is implemented.")
     // Creating a Bank Account
-//    val account = BankAccount("123456789", "John Doe")
+    val account = BankAccount("123456789", "John Doe")
 
     // Displaying account information
-//    account.displayAccountInfo()
+    account.displayAccountInfo()
 
     // Depositing some money
-//    account.deposit(1000.0)
+    account.deposit(1000)
 
     // Withdrawing some money
-//    account.withdraw(500.0)
+    account.withdraw(500)
 
     // Displaying updated account information
-//    account.displayAccountInfo()
+    account.displayAccountInfo()
 }
