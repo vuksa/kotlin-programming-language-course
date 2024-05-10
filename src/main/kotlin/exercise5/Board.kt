@@ -29,13 +29,13 @@ interface SquareBoard {
     fun Cell.getNeighbour(direction: Direction): Cell?
 }
 
-interface GameBoard : SquareBoard {
+interface GameBoard<T> : SquareBoard {
 
-    operator fun get(cell: Cell): String?
-    operator fun set(cell: Cell, value: String?)
+    operator fun get(cell: Cell): T?
+    operator fun set(cell: Cell, value: T?)
 
-    fun filter(predicate: (String?) -> Boolean): Collection<Cell>
-    fun find(predicate: (String?) -> Boolean): Cell?
-    fun any(predicate: (String?) -> Boolean): Boolean
-    fun all(predicate: (String?) -> Boolean): Boolean
+    fun filter(predicate: (T?) -> Boolean): Collection<Cell>
+    fun find(predicate: (T?) -> Boolean): Cell?
+    fun any(predicate: (T?) -> Boolean): Boolean
+    fun all(predicate: (T?) -> Boolean): Boolean
 }
