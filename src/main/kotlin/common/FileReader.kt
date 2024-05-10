@@ -1,7 +1,5 @@
 package common
 
-import java.nio.file.Path
-import java.nio.file.Paths
 import kotlin.io.path.readLines
 import kotlin.io.path.toPath
 
