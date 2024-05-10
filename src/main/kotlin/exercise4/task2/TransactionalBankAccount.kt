@@ -1,5 +1,6 @@
 package exercise4.task2
 
+import exercise4.task1.BankAccount
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -78,7 +79,104 @@ import java.util.*
  *      ```
  */
 
+data class Transaction(
+    val dateTime: LocalDateTime,
+    val amount: Int,
+    val oldBalance: Int,
+    val newBalance: Int,
+    val type: Type,
+    val status: STATUS
+) {
+    enum class Type {
+        DEPOSIT, WITHDRAWAL
+    }
 
+    enum class STATUS {
+        SUCCESS, FAILURE
+    }
+}
+
+class TransactionalBankAccount(
+    accountHolderName: String,
+    accountNumber: String
+) : BankAccount(accountHolderName, accountNumber) {
+    private val transactions = mutableListOf<Transaction>()
+
+    override fun withdraw(amount: Int): Boolean = doTransaction(amount, Transaction.Type.WITHDRAWAL)
+
+    override fun deposit(amount: Int): Boolean = doTransaction(amount, Transaction.Type.DEPOSIT)
+
+    override fun displayAccountInfo() {
+        super.displayAccountInfo()
+
+        val accountInfo = buildString {
+            appendLine()
+            appendLine("Transactions:")
+            appendLine()
+
+            if (transactions.isEmpty()) {
+                println("No transactions recorded.")
+            } else {
+                val transactionTemplate = """
+                    Transaction Date: [PRETTY_FORMATED_TRANSACTION_DATE]
+                    Transaction Type: [TRANSACTION_TYPE]
+                    Amount: [TRANSACTION_AMOUNT]
+                    Old Balance: [OLD_BALANCE]
+                    New Balance: [NEW_BALANCE]
+                    Status: [TRANSACTION_STATUS]
+                """.trimIndent()
+
+                transactions.forEach { transaction ->
+                    transactionTemplate
+                        .replace("[PRETTY_FORMATED_TRANSACTION_DATE]", transaction.dateTime.prettyPrint())
+                        .replace("[TRANSACTION_TYPE]", transaction.type.toString())
+                        .replace("[TRANSACTION_AMOUNT]", transaction.amount.toString())
+                        .replace("[OLD_BALANCE]", transaction.oldBalance.toString())
+                        .replace("[NEW_BALANCE]", transaction.newBalance.toString())
+                        .replace("[TRANSACTION_STATUS]", transaction.status.toString())
+                        .let(::appendLine)
+
+                    appendLine()
+                }
+            }
+        }
+
+        println(accountInfo)
+    }
+
+    private fun doTransaction(amount: Int, type: Transaction.Type): Boolean {
+        val currentTime = currentTime
+        val oldBalance = balance
+        val status = doTransactionWithResult(type, amount)
+        val newBalance = balance
+
+        transactions += Transaction(
+            currentTime,
+            amount,
+            oldBalance,
+            newBalance,
+            type,
+            status
+        )
+
+        return status == Transaction.STATUS.SUCCESS
+    }
+
+    private fun doTransactionWithResult(
+        type: Transaction.Type,
+        amount: Int
+    ): Transaction.STATUS {
+        val isSuccess = when (type) {
+            Transaction.Type.DEPOSIT -> super.deposit(amount)
+            Transaction.Type.WITHDRAWAL -> super.withdraw(amount)
+        }
+
+        return when {
+            isSuccess -> Transaction.STATUS.SUCCESS
+            else -> Transaction.STATUS.FAILURE
+        }
+    }
+}
 
 
 private val currentTime: LocalDateTime get() = LocalDateTime.now()
@@ -89,19 +187,17 @@ private fun LocalDateTime.prettyPrint(): String {
 }
 
 fun main() {
-    println(currentTime.prettyPrint())
     // Creating a Transactional Bank Account
-//    val account = TransactionalBankAccount("123456789", "John Doe")
-
-    // Displaying account information
-//    account.displayAccountInfo()
+    val account = TransactionalBankAccount("123456789", "John Doe")
 
     // Depositing some money
-//    account.deposit(1000.0)
+    account.deposit(1000)
 
     // Withdrawing some money
-//    account.withdraw(500.0)
+    account.withdraw(500)
+
+    account.withdraw(600)
 
     // Displaying updated account information
-//    account.displayAccountInfo()
+    account.displayAccountInfo()
 }
