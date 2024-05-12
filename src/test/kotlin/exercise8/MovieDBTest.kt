@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 
 
 class MovieDBTest {
-    private val movieDBApi: MovieDBApi = TODO("Instantiate object as follows: MovieDB(parseMovies(FileReader.readFileInResources(\"exercise8/movies.csv\")))")
+    private val movieDBApi = MovieDB(parseMovies(FileReader.readFileInResources("exercise8/movies.csv")))
 
     @Test
     fun `test - api returns all movies by actor`() {
