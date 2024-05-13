@@ -1,5 +1,6 @@
 package exercise4.task2
 
+import exercise4.task1.BankAccount
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -78,8 +79,104 @@ import java.util.*
  *      ```
  */
 
+enum class TType {
+    DEPOSIT, WITHDRAWAL
+}
 
+enum class TStatus {
+    SUCCESS, FAILURE
+}
 
+data class Transaction(
+    val transactionDate: LocalDateTime,
+    val transactionType: TType,
+    val amount: Double,
+    val oldBalance: Double,
+    val newBalance: Double,
+    val transactionStatus: TStatus
+)
+
+class TransactionalBankAccount(
+    accountNumber: String,
+    accHolderName: String,
+    balance: Double,
+) : BankAccount(accountNumber, accHolderName, balance) {
+
+    private val transactions: MutableList<Transaction> = mutableListOf()
+
+    override fun deposit(amount: Double): Boolean {
+        val oldBalance = getBalance()
+        super.deposit(amount)
+        val newBalance = getBalance()
+
+        transactions.add(Transaction(currentTime, TType.DEPOSIT, amount, oldBalance, newBalance, TStatus.SUCCESS))
+        return true
+    }
+
+    override fun withdraw(amount: Double): Boolean {
+        val oldBalance = getBalance()
+        val success = super.withdraw(amount)
+        val newBalance = getBalance()
+        val status = if (success) TStatus.SUCCESS else TStatus.FAILURE
+
+        transactions.add(Transaction(currentTime, TType.WITHDRAWAL, amount, oldBalance, newBalance, status))
+        return success
+    }
+
+    fun getAllTransactions(): List<Transaction> {
+        return transactions.sortedByDescending { it.transactionDate }
+    }
+
+    fun getAllTransactionsBy(predicate: (Transaction) -> Boolean): List<Transaction> {
+        return getAllTransactions().filter(predicate)
+    }
+
+    fun getTransactionsBetween(startDate: LocalDateTime, endDate: LocalDateTime): List<Transaction> {
+        return getAllTransactionsBy { it.transactionDate in startDate..endDate }
+    }
+
+    fun getAllFailedTransactions(): List<Transaction> {
+        return getAllTransactionsBy { it.transactionStatus == TStatus.FAILURE }
+    }
+
+    fun getAllSuccessfulTransaction(): List<Transaction> {
+        return getAllTransactionsBy { it.transactionStatus == TStatus.SUCCESS }
+    }
+
+    fun getAllFailedDeposits(): List<Transaction> {
+        return getAllTransactionsBy {it.transactionType == TType.DEPOSIT && it.transactionStatus == TStatus.FAILURE }
+    }
+
+    fun getAllFailedWithdrawals(): List<Transaction> {
+        return getAllTransactionsBy {it.transactionType == TType.WITHDRAWAL && it.transactionStatus == TStatus.FAILURE }
+    }
+
+    fun getAllSuccessfulDeposits(): List<Transaction> {
+        return getAllTransactionsBy { it.transactionType == TType.DEPOSIT && it.transactionStatus == TStatus.SUCCESS }
+    }
+
+    fun getAllSuccessfulWithdrawals(): List<Transaction> {
+        return getAllTransactionsBy { it.transactionType == TType.WITHDRAWAL && it.transactionStatus == TStatus.SUCCESS}
+    }
+
+    override fun displayAccountInfo() {
+        super.displayAccountInfo()
+        println("Transactions:\n")
+        if (transactions.isEmpty()) {
+            println("No transactions recorded\n")
+        } else {
+            transactions.forEach {
+                println("Transaction Date: ${it.transactionDate.prettyPrint()}")
+                println("Transaction Type: ${it.transactionType}")
+                println("Amount: ${it.amount}")
+                println("Old Balance: ${it.oldBalance}")
+                println("New Balance: ${it.newBalance}")
+                println("Status ${it.transactionStatus}")
+                println()
+            }
+        }
+    }
+}
 
 private val currentTime: LocalDateTime get() = LocalDateTime.now()
 
@@ -91,17 +188,17 @@ private fun LocalDateTime.prettyPrint(): String {
 fun main() {
     println(currentTime.prettyPrint())
     // Creating a Transactional Bank Account
-//    val account = TransactionalBankAccount("123456789", "John Doe")
+    val account = TransactionalBankAccount("123456789", "John Doe", 0.0)
 
     // Displaying account information
-//    account.displayAccountInfo()
+    account.displayAccountInfo()
 
     // Depositing some money
-//    account.deposit(1000.0)
+    account.deposit(1000.0)
 
     // Withdrawing some money
-//    account.withdraw(500.0)
+    account.withdraw(500.0)
 
     // Displaying updated account information
-//    account.displayAccountInfo()
+    account.displayAccountInfo()
 }
