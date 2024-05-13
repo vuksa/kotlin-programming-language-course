@@ -49,11 +49,11 @@ internal data class Address(
  */
 
 internal fun user(initUser: User.() -> Unit): User {
-    TODO("Implement me!!!")
+    return User().apply(initUser)
 }
 
 internal fun User.address(initAddress: Address.() -> Unit): User {
-    TODO("Implement me!!!")
+    return apply { address = Address().apply(initAddress) }
 }
 
 fun main() {

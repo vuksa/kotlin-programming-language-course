@@ -26,7 +26,21 @@ package exercise3.task1
 
 
 internal fun isExpressionBalanced(expression: String): Boolean {
-    TODO("Implement me!!!")
+    val openBrackets = listOf('(', '[', '{')
+    val closedBrackets = listOf(')', ']', '}')
+    var brackets = mutableListOf<Char>()
+
+
+    for(char in expression) {
+        when(char) {
+            in openBrackets -> brackets.add(char)
+            ')' -> if(brackets.isEmpty() || brackets.removeAt(brackets.size - 1) != '(') return false
+            ']' -> if(brackets.isEmpty() || brackets.removeAt(brackets.size - 1) != '[') return false
+            '}' -> if(brackets.isEmpty() || brackets.removeAt(brackets.size - 1) != '{') return false
+        }
+    }
+
+    return brackets.isEmpty()
 }
 
 fun main() {

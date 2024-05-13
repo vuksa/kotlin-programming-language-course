@@ -1,5 +1,6 @@
 package org.jetbrains.exercise2.task3
 
+import exercise2.task2.findHighestSumPairFunctional
 import org.jetbrains.exercise2.common.isEqualsTo
 import kotlin.math.abs
 
@@ -17,24 +18,8 @@ import kotlin.math.abs
  */
 
 internal fun List<Int>.findPairWithBiggestDifference(): Pair<Int, Int> {
-    // TODO refactor me to functional approach and make tests pass!!!
-    var resultPair: Pair<Int, Int>? = null
-    var biggestDifference = Int.MIN_VALUE
-
-    for (i in this.indices) {
-        for (j in (i + 1) until this.size) {
-            val first = this[i]
-            val second = this[j]
-            val absDifference = abs(first - second)
-
-            if (absDifference >= biggestDifference) {
-                biggestDifference = absDifference
-                resultPair = Pair(first, second)
-            }
-        }
-    }
-
-    return resultPair!!
+    require(this.size >= 2) { "List must have at least two integers." }
+    return this.sortedDescending().let { sortedList -> sortedList.first() to sortedList.last() }
 }
 
 fun main() {

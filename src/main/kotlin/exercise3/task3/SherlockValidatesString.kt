@@ -17,7 +17,7 @@ package exercise3.task3
  * s = abcc
  * This is a valid string because we can remove one `c` and have `1` of each character in the remaining string.
  *
- * s = abccc
+ * s = abcc
  * This string is not valid as we can only remove `1` occurrence of `c`. That leaves character frequencies of
  * {`a`: 1, `b`: 1, `c`: 2}.
  * ```
@@ -29,7 +29,19 @@ package exercise3.task3
  */
 
 internal fun isSherlockValid(s: String): String {
-    TODO("Implement me!!!")
+    require(s.length in 1..100000) { "String length must be in range from 1 to 10^5" }
+    require(s.all{ it in 'a'..'z' }) { "String must only contain small letters (a..z)" }
+
+    val occurrences = s.groupingBy { it }.eachCount().map { it.value }
+    val cMin = occurrences.min()
+    val cMax = occurrences.max()
+
+    return when {
+        cMin == cMax -> "YES"
+        cMax - cMin == 1 && occurrences.count { it == cMax } == 1 -> "YES"
+        cMin == 1 && occurrences.count { it == cMin } == 1 && occurrences.count { it == cMax } == occurrences.size - 1 -> "YES"
+        else -> "NO"
+    }
 }
 
 fun main() {
@@ -38,7 +50,6 @@ fun main() {
     stringsToValidityCatalog.forEach { (string, expectedIsValid) ->
         val actualIsValid = isSherlockValid(string)
         val errorMessageFactory = { answer: String -> if (answer == "YES") "is valid" else "is not valid" }
-
         require(expectedIsValid == actualIsValid) {
             "String \"$string\" is ${errorMessageFactory(expectedIsValid)}," +
                     " but actual value was ${errorMessageFactory(actualIsValid)}."

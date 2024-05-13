@@ -1,5 +1,7 @@
 package org.jetbrains.exercise1.task5
 
+import kotlin.math.abs
+
 /**
  * Task 5: Given an integer x, return x with its digits reversed.
  *
@@ -27,10 +29,11 @@ package org.jetbrains.exercise1.task5
  */
 
 internal fun reverseInteger(x: Int): Int {
-    TODO("Implement me!!!")
+    require(x in -1000000..1000000) { "Number must be integer in range -1000000..1000000" }
+    val reversed = abs(x).toString().reversed()
+    return if (x < 0) ("-$reversed").toInt() else reversed.toInt()
 }
-
 fun main() {
-    val integer = -321
+    val integer = -78952
     println("Reverse integer of number $integer is ${reverseInteger(integer)}")
 }

@@ -24,11 +24,35 @@ package exercise3.task2
  */
 
 internal fun String.splitToBracketsClusters(): List<String> {
-    TODO("Implement me!!!")
+    var clusters =  mutableListOf<String>()
+    var open = 0
+    var builder = StringBuilder()
+    this.forEach {
+        when {
+            it == '(' -> {
+                open++
+                builder.append('(')
+            }
+            it == ')' -> {
+                open--
+                builder.append(')')
+            }
+            else -> throw IllegalArgumentException("Invalid character")
+        }
+
+        if(open == 0) {
+            clusters.add(builder.toString())
+            builder = StringBuilder()
+        }
+
+        if(open < 0) return emptyList()
+    }
+    if(open != 0) return emptyList() else return clusters
 }
 
 fun main() {
     val expressionsToClustersCatalog = mapOf(
+        "()(" to listOf("()"),
         "()()()" to listOf("()", "()", "()"),
         "((()))" to listOf("((()))"),
         "((()))(())()()(()())" to listOf("((()))", "(())", "()", "()", "(()())"),
@@ -41,4 +65,6 @@ fun main() {
             "Expression $expression should be split to $expression clusters, but actual value was $actualClusters."
         }
     }
+
+
 }
