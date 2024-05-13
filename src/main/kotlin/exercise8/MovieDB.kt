@@ -44,19 +44,14 @@ class MovieDB(private val movies: List<Movie>) : MovieDBApi {
     data class ActorCostarring(val actor: MovieActor, val anotherActor: MovieActor, val numOfMovies: Int)
 
     override fun getActorsWithMostCostarredMovies(): List<Pair<MovieActor, MovieActor>> {
-        val actorToMovies: Map<MovieActor, Set<Movie>> = movies
+        val actorToMovies: Map<MovieActor, List<Movie>> = movies
             .flatMap { movie -> movie.actors.map { actor -> actor to movie } }
-            .fold(mutableMapOf()) { actorToMoviesCatalog, (actor, movie) ->
-                actorToMoviesCatalog[actor] = actorToMoviesCatalog.getOrElse(actor) { emptySet() } + movie
-
-                actorToMoviesCatalog
-            }
+            .groupBy({ actorToMovie -> actorToMovie.first }, { actorToMovie -> actorToMovie.second })
 
 
         val actors = actorToMovies
             .keys
             .sortedBy { it.name }
-            .distinct()
 
         val costarringActors = actors.flatMap { actor ->
             actors.mapNotNull { anotherActor ->
@@ -74,7 +69,11 @@ class MovieDB(private val movies: List<Movie>) : MovieDBApi {
 
         return costarringActors
             .takeWhile { it.numOfMovies == maxCostarringMoviesCount }
-            .fold(setOf<Pair<MovieActor, MovieActor>>()) { actorsSet, (actor, anotherActor, _) -> actorsSet + setOf(actor to anotherActor) }
+            .fold(setOf<Pair<MovieActor, MovieActor>>()) { actorsSet, (actor, anotherActor, _) ->
+                actorsSet + setOf(
+                    actor to anotherActor
+                )
+            }
             .toList()
     }
 }
