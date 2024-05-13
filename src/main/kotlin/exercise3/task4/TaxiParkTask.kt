@@ -1,5 +1,6 @@
 package exercise3.task4
 
+
 /**
  * Task 4: Taxi park
  *
@@ -10,7 +11,7 @@ package exercise3.task4
  * Find all the drivers who performed no trips.
  */
 internal fun TaxiPark.findFakeDrivers(): Set<Driver> {
-    TODO("Implement me!!!")
+    return this.allDrivers.filter { driver -> trips.none { it.driver == driver } }.toSet()
 }
 
 /**
@@ -18,7 +19,8 @@ internal fun TaxiPark.findFakeDrivers(): Set<Driver> {
  * Find all the clients who completed at least the given number of trips.
  */
 internal fun TaxiPark.findFaithfulPassengers(minTrips: Int): Set<Passenger> {
-    TODO("Implement me!!!")
+    return this.allPassengers.filter { passenger ->
+        trips.count { it.passengers.contains(passenger) } >= minTrips }.toSet()
 }
 
 /**
@@ -26,7 +28,8 @@ internal fun TaxiPark.findFaithfulPassengers(minTrips: Int): Set<Passenger> {
  * Find all the passengers, who were taken by a given driver more than once.
  */
 internal fun TaxiPark.findFrequentPassengers(driver: Driver): Set<Passenger> {
-    TODO("Implement me!!!")
+    return this.allPassengers.filter { passenger ->
+        trips.count { (it.driver == driver) and (it.passengers.contains(passenger)) } > 1  }.toSet()
 }
 
 /**
@@ -34,5 +37,12 @@ internal fun TaxiPark.findFrequentPassengers(driver: Driver): Set<Passenger> {
  * Find the passengers who had a discount for the majority of their trips.
  */
 internal fun TaxiPark.findSmartPassengers(): Set<Passenger> {
-    TODO("Implement me!!!")
+    /*
+    Kako bih mogao da recikliram kod "it.passengers.contains(passenger)",
+    da ne brojim dva puta?
+    */
+    return this.allPassengers
+        .filter { passenger ->
+             trips.count {  ( it.passengers.contains(passenger) ) and ( it.discount != null) } >
+                    trips.count{ it.passengers.contains(passenger) } / 2 }.toSet()
 }

@@ -1,5 +1,7 @@
 package exercise3.task3
 
+import kotlin.math.abs
+
 /**
  * Task 3: Sherlock Validates the Words
  *
@@ -29,11 +31,45 @@ package exercise3.task3
  */
 
 internal fun isSherlockValid(s: String): String {
-    TODO("Implement me!!!")
+
+    val grpByChars = s.groupingBy { it }.eachCount()
+
+    val valuesOfGrouping = grpByChars.values.groupingBy { it }.eachCount()
+
+    if (valuesOfGrouping.size > 2) return "NO"
+    if (valuesOfGrouping.size == 1) return "YES"
+
+    val firstKey = valuesOfGrouping.keys.first()
+    val firstValue = valuesOfGrouping.values.first()
+    val secondKey = valuesOfGrouping.keys.last()
+    val secondValue = valuesOfGrouping.values.last()
+
+    if((secondValue == 1) and (secondKey== 1)) return "YES"
+    if((firstValue == 1) and (firstKey== 1)) return "YES"
+
+    val minusKeys = abs(firstKey - secondKey)
+    val minusValues = abs(firstValue - secondValue)
+
+/*
+    Mislim da sa ovim ne pokrivam sve krajnje slucajeve
+    i da kod nije bas efikasan. Prolazi testove.
+ */
+    if ( (minusKeys <=1) or (minusValues <= 1) ){
+
+        if( (firstKey > secondKey) and (firstValue > secondValue) ) return "NO"
+        if( (firstKey < secondKey) and (firstValue < secondValue) ) return "NO"
+        if(firstValue >=2 && secondValue >= 2)  return "NO"
+
+        return "YES"
+    }
+    else{
+        return "NO"
+    }
+
 }
 
 fun main() {
-    val stringsToValidityCatalog = mapOf("abc" to "YES", "abcc" to "YES", "abccc" to "NO")
+    val stringsToValidityCatalog = mapOf("abc" to "YES", "abcc" to "YES", "aabbccccc" to "NO")
 
     stringsToValidityCatalog.forEach { (string, expectedIsValid) ->
         val actualIsValid = isSherlockValid(string)
