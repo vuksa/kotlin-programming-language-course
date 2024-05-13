@@ -26,7 +26,25 @@ package exercise3.task1
 
 
 internal fun isExpressionBalanced(expression: String): Boolean {
-    TODO("Implement me!!!")
+    val stack = mutableListOf<Char>()
+
+    for (char in expression) {
+        when (char) {
+            '(', '{', '[' -> stack.add(char)
+            ')', '}', ']' -> {
+                if (stack.isEmpty()) return false
+                val last = stack.removeAt(stack.size - 1)
+                if ((char == ')' && last != '(') ||
+                    (char == '}' && last != '{') ||
+                    (char == ']' && last != '[')
+                ) {
+                    return false
+                }
+            }
+        }
+    }
+
+    return stack.isEmpty()
 }
 
 fun main() {
