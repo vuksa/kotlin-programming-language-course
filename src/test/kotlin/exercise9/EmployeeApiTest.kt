@@ -24,7 +24,7 @@ class EmployeeApiTest {
                 .sortedBy { it.name }
                 .map { it.name }
 
-            assertEquals(DEPARTMENT_TO_EMPLOYEE[department.name], actualEmployees)
+            assertEquals(DEPARTMENT_TO_EMPLOYEE[department.departmentName], actualEmployees)
         }
     }
 
@@ -46,7 +46,7 @@ class EmployeeApiTest {
         departments.forEach { department ->
             val actualAverageSalary = employeeApi.calculateAverageSalaryByDepartment(department)
 
-            assertEquals(DEPARTMENT_NAME_TO_AVERAGE_SALARY[department.name], actualAverageSalary)
+            assertEquals(DEPARTMENT_NAME_TO_AVERAGE_SALARY[department.departmentName], actualAverageSalary)
         }
     }
 
