@@ -1,0 +1,51 @@
+Employee ID,Name,Department,Salary,Skills
+1,Kevin Johnson,HR,61851,Recruitment
+2,Amy Doe,Finance,58802,Financial Planning
+3,Kevin Rodriguez,Engineering,66029,Kotlin
+4,Amy Rodriguez,Engineering,62689,Java|Kotlin|Python
+5,Michael Johnson,Engineering,50740,Java|Python
+6,Kevin Adams,Engineering,80489,Kotlin|Java|Python
+7,Chris Wilson,Engineering,67981,Kotlin
+8,Amy Wang,Finance,70468,Financial Planning|Financial Reporting
+9,Chris Wang,Engineering,78657,Python|Java
+10,Amy Adams,HR,58847,Employee Relations|Performance Management|Training
+11,Sarah Wilson,HR,49281,Employee Relations
+12,John Wang,Engineering,60760,Python|Kotlin|Java
+13,Kevin Doe,Finance,65261,Financial Analysis
+14,Jane Johnson,HR,53340,Employee Relations
+15,Jane Davis,Finance,70197,Financial Reporting|Accounting|Investment Analysis
+16,Emily Wang,HR,58991,Training|Performance Management
+17,Alice Wilson,HR,54518,Performance Management
+18,Jane Lee,HR,54147,Performance Management|Recruitment
+19,David Taylor,HR,53150,Performance Management
+20,Alice Adams,Engineering,75188,Kotlin|Java
+21,David Wilson,Engineering,69053,Java
+22,Amy Taylor,Marketing,48566,Marketing Strategy|Content Writing
+23,Emily Smith,HR,48250,Training|Performance Management|Employee Relations
+24,Alice Lee,Finance,70400,Financial Planning
+25,Alice Rodriguez,HR,51001,Performance Management|Employee Relations
+26,Jane Rodriguez,HR,54553,Recruitment|Training
+27,Jane Brown,Marketing,56116,Content Writing|Marketing Strategy
+28,Emily Adams,Finance,67834,Financial Planning|Accounting|Investment Analysis
+29,Kevin Smith,HR,54821,Training|Recruitment|Employee Relations
+30,Amy Smith,Engineering,59064,Java|Python|Kotlin
+31,Chris Adams,HR,55017,Recruitment|Performance Management|Training
+32,Emily Wilson,Engineering,63142,Python
+33,Chris Rodriguez,Engineering,62649,Kotlin|Java
+34,Chris Taylor,Marketing,58124,Content Writing|Marketing Strategy
+35,David Smith,Engineering,63081,Kotlin|Python
+36,Alice Doe,Engineering,57117,Java|Kotlin|Python
+37,John Que,HR,58916,Employee Relations|Performance Management
+38,Kevin Lee,Engineering,72762,Java|Kotlin
+39,Alice Brown,Marketing,47119,Marketing Strategy
+40,Emily Doe,HR,61906,Performance Management|Employee Relations|Recruitment
+41,John Smith,Marketing,57781,Marketing Strategy|Content Writing
+42,Alice Smith,Engineering,77688,Python
+43,Jane Doe,Marketing,59216,Content Writing|Marketing Strategy
+44,Amy Wilson,Engineering,70026,Python|Kotlin
+45,Chris Doe,Marketing,45788,Content Writing|Marketing Strategy
+46,Jane Towns,HR,51963,Recruitment|Employee Relations|Training
+47,Sarah Lee,HR,54220,Recruitment
+48,David Doe,Engineering,69196,Python|Java
+49,Michael Lee,Engineering,65183,Kotlin
+50,Kevin Taylor,Marketing,57251,Marketing Strategy
